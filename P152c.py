@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import sys
+import numpy as np
 # from pyprimes import primes
 # from functools import reduce
 from math import log
@@ -179,8 +180,10 @@ def main():
     minSum0 = 1
     maxSum0 = 1
     mode=0
-    count0=[]
-    count1=[]
+#    count0=[]
+#    count1=[]
+    count0=np.zeros(1,dtype= np.int64)
+    count1=np.zeros(1,dtype= np.int64)
     offsetS0=0
     while nextLevelState():
         compute_level(LS_Elem,LS_Constraint)
@@ -232,7 +235,8 @@ def main():
             print("*** SWAP to OUNT_COUNT ***")
             break
     if mode == 1:
-        count1 = [0]*nbCountS1
+#       count1 = [0]*nbCountS1
+        count1=np.zeros(nbCountS1,dtype= np.int64)
         for sum in histo0:
             count = histo0[sum]
             sum *= factS
@@ -260,8 +264,9 @@ def main():
             nbCountS1 =  sumMax + 1
         offsetS1 = sumMax - (nbCountS1-1)
         print("Level=", LS_numLevel, "Min=",minSum0, "Max=",maxSum0," Elem=[", LS_Elem[0],"...",LS_Elem[-1],end='')
-        print("] ppcm=", LS_ppcm, " fact=", LS_fact,"ExpOut",nbCountS1,"Hin=",len(histo0),end='')
-        count1 = [0]*nbCountS1
+        print("] ppcm=", LS_ppcm, " fact=", LS_fact,"ExpOut",nbCountS1,"Hin=",len(count0),end='')
+#   count1 = [0]*nbCountS1
+        count1 = np.zeros(nbCountS1,dtype= np.int64 )
         for ih in range(0,len(count0)):
             sum = ih + offsetS0
             count = count0[ih]
@@ -277,10 +282,11 @@ def main():
                 elif newSum < minSum0:
                     minSum0 = newSum
                 count1[newSum-offsetS1] += count
-        count0=[]
+#        count0=[]
+        count0= np.zeros(1)
         (count0,count1)=(count1,count0)
         offsetS0=offsetS1
-        print("=>LenH=",len(count1))
+        print("=>LenH=",len(count0))
 
 
     if mode==0:
