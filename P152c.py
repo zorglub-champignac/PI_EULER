@@ -1,15 +1,11 @@
 from __future__ import print_function
 
 import sys
-import numpy as np
-# from pyprimes import primes
-# from functools import reduce
 from math import log
-# from operator import mul
-# from bisect import bisect
+from time import clock
 
 small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
-                103, 107]
+                103, 107,109,113,119,127,131,137,139,149,151,157,161]
 
 #list of powp (p, powp, ppcmPowp)
 LP_powpList = []
@@ -96,6 +92,7 @@ def nextLevelState():
             if k in LS_usedVal:
                 continue
             if LP_den_ppcm % k == 0:
+                pgcd64=pgcd(ppcm,k)
                 ppcm = ppcm * k // pgcd(ppcm,k)
                 LS_Elem.append((k,0))
         if len(LS_Elem) > 0:
@@ -162,45 +159,42 @@ def Print_LV():
         listSum = LV_index[modL]
         if len(listSum) > 0:
             print("mod=", modL, " Val", listSum)
-
+# Pp=(p,powp,ppcpPopm)
+def getPowp(Pp):
+    return Pp[1]
 
 def main():
-    global LP_den_ppcm
+    global LP_den_ppcm,LP_powpList
     global LS_numLevel, LS_usedVal , LS_Elem, LS_Constraint, LS_fact, LS_ppcm
     global LV_index
-
+    clock() ;
+    clk = 0 ;
     ListPowp(maxn)
-    print("Denppcm=",LP_den_ppcm," Powp: ", LP_powpList)
-#    while nextLevelState():
-
-#    print("Level=",LS_numLevel," Elem=",LS_Elem," ppcm=",LS_ppcm," fact=",LS_fact)
+    print("Denppcm=",LP_den_ppcm," Powp: ",[getPowp(Pp) for Pp in LP_powpList])
     histo0={}
     histo0[1]=1
     histo1={}
     minSum0 = 1
     maxSum0 = 1
     mode=0
-#    count0=[]
-#    count1=[]
-    count0=np.zeros(1,dtype= np.int64)
-    count1=np.zeros(1,dtype= np.int64)
+    count0=[]
     offsetS0=0
     while nextLevelState():
         compute_level(LS_Elem,LS_Constraint)
-#        Print_LV()
         factS = LS_fact * LS_fact
         offsetS0 = minSum0
-#           ihMax = nbHisto0
         sumMax = maxSum0
         sumMax = (sumMax * factS ) // LS_Constraint
         nbCountS1 = sumMax - offsetS0*factS // LS_Constraint + LV_maxSum + 1
         if nbCountS1-1 > sumMax:
             nbCountS1 =  sumMax + 1
         offsetS1 = sumMax - (nbCountS1-1)
+        clk = clock() ;
+        print("{:.3f}s ".format(clk),end='')
         print("Level=", LS_numLevel, "Min=",minSum0, "Max=",maxSum0," Elem=[", LS_Elem[0],"...",LS_Elem[-1],end='')
         print("] ppcm=", LS_ppcm, " fact=", LS_fact,"ExpOut",nbCountS1,"Hin=",len(histo0),end='')
         if nbCountS1 < 2 * len(histo0) -10:
-            print("Swap to mode OUT_COUNT")
+            print("Swap to mode OUT_COUNT",end='')
             mode=1
             break
         minSum0 = LS_ppcm * LS_ppcm
@@ -229,14 +223,14 @@ def main():
                 break
         if mode == 0:
             histo0.clear()
-            print("=>LenH=",len(histo1))
+            print("=>LenH=",nout,"/",len(histo1))
             (histo0,histo1)=(histo1,histo0)
         else:
-            print("*** SWAP to OUNT_COUNT ***")
+            print("*** => OUNT_COUNT ***",end='')
             break
     if mode == 1:
-#       count1 = [0]*nbCountS1
-        count1=np.zeros(nbCountS1,dtype= np.int64)
+        count1 = [0]*nbCountS1
+        nout =0
         for sum in histo0:
             count = histo0[sum]
             sum *= factS
@@ -245,15 +239,14 @@ def main():
             for intLV in LV_index[modSum]:
                 if intSum < intLV:
                     break
+                nout += 1
                 newSum = intSum - intLV
-                if newSum > maxSum0:
-                    maxSum0 = newSum
-                elif newSum < minSum0:
-                    minSum0 = newSum
                 count1[newSum-offsetS1] += count
         histo0.clear()
         (count0,count1)=(count1,count0)
         offsetS0=offsetS1
+        print("=>LenH=", nout, "/", len(count0))
+    LP_powpList.sort(reverse=True,key=getPowp)
     while nextLevelState():
         compute_level(LS_Elem, LS_Constraint)
         #        Print_LV()
@@ -263,30 +256,30 @@ def main():
         if nbCountS1-1 > sumMax:
             nbCountS1 =  sumMax + 1
         offsetS1 = sumMax - (nbCountS1-1)
-        print("Level=", LS_numLevel, "Min=",minSum0, "Max=",maxSum0," Elem=[", LS_Elem[0],"...",LS_Elem[-1],end='')
+        clk = clock() ;
+        print("{:.3f}s ".format(clk),end='')
+        print("Level=", LS_numLevel, " Elem=[", LS_Elem[0],"...",LS_Elem[-1],end='')
         print("] ppcm=", LS_ppcm, " fact=", LS_fact,"ExpOut",nbCountS1,"Hin=",len(count0),end='')
-#   count1 = [0]*nbCountS1
-        count1 = np.zeros(nbCountS1,dtype= np.int64 )
+        count1 = [0]*nbCountS1
+        nout = 0
         for ih in range(0,len(count0)):
             sum = ih + offsetS0
             count = count0[ih]
+            if count==0:
+                continue
             sum *= factS
             intSum = sum // LS_Constraint
             modSum = sum - intSum * LS_Constraint
             for intLV in LV_index[modSum]:
                 if intSum < intLV:
                     break
+                nout += 1
                 newSum = intSum - intLV
-                if newSum > maxSum0:
-                    maxSum0 = newSum
-                elif newSum < minSum0:
-                    minSum0 = newSum
                 count1[newSum-offsetS1] += count
-#        count0=[]
-        count0= np.zeros(1)
+        count0=[]
         (count0,count1)=(count1,count0)
         offsetS0=offsetS1
-        print("=>LenH=",len(count0))
+        print("=>LenH=",nout,"/",len(count0))
 
 
     if mode==0:
