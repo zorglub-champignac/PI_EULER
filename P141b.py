@@ -81,7 +81,7 @@ def main():
     sqMax = sqrt(paramMaxN)
     while a3 <= paramMaxN:
         for (sf,i0,iend) in SFL:
-            if sf < a and (a3+1) * sf * sf *sf <= paramMaxN:
+            if sf < a and (a3+1) * sf * sf * sf <= paramMaxN:
                 if  pgcd(a, sf) != 1:
                     continue
 #                for (sfk, k0) in COEF[i0:iend]:
@@ -109,27 +109,26 @@ def main():
                                 Sum += n
                             bs += 1
                             b = bs * bs * b0
-
                         ks = 2
                         k = ks * ks * k0
-                        n = k * b0 * (k * a3 + b0)
-                        while n <= paramMaxN:
-                            sq_ka = ks * ks * sq_k0a
+                        sq_ka = ks * ks * sq_k0a
+                        while sq_ka <= sqMax:
+                            n = k * b0 * (k * a3 + b0)
                             if TestSol(sq_ka, n, a, b0):
                                 Sum += n
                             bs = 2
                             b = bs * bs * b0
                             while b < a:
-                                n = k * b * ( k * a3 + b )
-                                if n > paramMaxN or bs*sq_ka > sqMax:
+                                if bs*sq_ka > sqMax:
                                     break
+                                n = k * b * (k * a3 + b)
                                 if TestSol(bs * sq_ka , n, a, b):
                                     Sum += n
                                 bs += 1
                                 b = bs * bs * b0
                             ks += 1
                             k = ks * ks * k0
-                            n = k * b0 * (k * a3 + b0)
+                            sq_ka = ks * ks * sq_k0a
             else:
                 break
         a += 1
