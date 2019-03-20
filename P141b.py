@@ -78,47 +78,58 @@ def main():
             id += 1
         iend=id
         SFL.append((sf,i0,iend))
+    sqMax = sqrt(paramMaxN)
     while a3 <= paramMaxN:
         for (sf,i0,iend) in SFL:
             if sf < a and (a3+1) * sf * sf *sf <= paramMaxN:
-                if pgcd(a, sf) != 1:
+                if  pgcd(a, sf) != 1:
                     continue
-                for (sfk, k0) in COEF[i0:iend]:
-                    b0 = sfk
-                    if b0 >= a:
+#                for (sfk, k0) in COEF[i0:iend]:
+                for ik in range(i0,iend):
+                    (sfk, k0) = COEF[ik]
+                    if sfk >= a or k0 * sfk * ( k0 * a3 + sfk) > paramMaxN:
                         break
-                    n = k0 * b0 * ( k0 * a3 + b0 )
-                    if n > paramMaxN:
-                        break
-                    for (sfb,b0) in COEF[i0:iend]:
-                        n = k0 * b0 * ( k0 * a3 +  b0 )
+                    for ib in range(i0,iend):
+                        (sfb,b0) = COEF[ib]
+                        n = k0 * b0 * ( k0 * a3 + b0 )
                         if b0 >= a or n > paramMaxN:
                             break
                         if ((sfk * sfb) % sf) != 0:
                             continue
                         sq_k0a = k0 * a * sqrt(a*b0)
-                        bs=1
-                        b= b0
-                        while b < a :
-                            n = k0 * b * (k0 * a3 + b )
+                        if TestSol(sq_k0a, n, a, b0):
+                            Sum += n
+                        bs = 2
+                        b = bs * bs * b0
+                        while b < a:
+                            n = k0 * b * (k0 * a3 + b)
                             if n > paramMaxN:
                                 break
-                            sq_k0b = bs * sq_k0a
-                            if TestSol(sq_k0b, n, a, b):
+                            if TestSol(bs*sq_k0a, n, a, b):
                                 Sum += n
-                            ks = 2
-                            ks2 = ks * ks
-                            k = ks2 * k0
-                            n = k * b * (k * a3 + b)
-                            while n <= paramMaxN:
-                                if TestSol(ks2*sq_k0b, n, a, b):
-                                    Sum += n
-                                ks += 1
-                                ks2 = ks * ks
-                                k = ks2 * k0
-                                n = k * b * (k * a3 + b)
                             bs += 1
                             b = bs * bs * b0
+
+                        ks = 2
+                        k = ks * ks * k0
+                        n = k * b0 * (k * a3 + b0)
+                        while n <= paramMaxN:
+                            sq_ka = ks * ks * sq_k0a
+                            if TestSol(sq_ka, n, a, b0):
+                                Sum += n
+                            bs = 2
+                            b = bs * bs * b0
+                            while b < a:
+                                n = k * b * ( k * a3 + b )
+                                if n > paramMaxN or bs*sq_ka > sqMax:
+                                    break
+                                if TestSol(bs * sq_ka , n, a, b):
+                                    Sum += n
+                                bs += 1
+                                b = bs * bs * b0
+                            ks += 1
+                            k = ks * ks * k0
+                            n = k * b0 * (k * a3 + b0)
             else:
                 break
         a += 1
