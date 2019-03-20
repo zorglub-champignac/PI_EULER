@@ -84,43 +84,39 @@ def main():
             if sf < a and (a3+1) * sf * sf * sf <= paramMaxN:
                 if  pgcd(a, sf) != 1:
                     continue
-#                for (sfk, k0) in COEF[i0:iend]:
                 for ik in range(i0,iend):
                     (sfk, k0) = COEF[ik]
                     if sfk >= a or k0 * sfk * ( k0 * a3 + sfk) > paramMaxN:
                         break
                     for ib in range(i0,iend):
                         (sfb,b0) = COEF[ib]
-                        n = k0 * b0 * ( k0 * a3 + b0 )
-                        if b0 >= a or n > paramMaxN:
-                            break
                         if ((sfk * sfb) % sf) != 0:
                             continue
-                        sq_k0a = k0 * a * sqrt(a*b0)
+                        sq_ab0 = a * sqrt(a*b0)
+                        sq_k0a = k0 * sq_ab0
+                        if b0 >= a or sq_k0a > sqMax:
+                            break
+                        n = k0 * b0 * (k0 * a3 + b0 )
                         if TestSol(sq_k0a, n, a, b0):
                             Sum += n
                         bs = 2
                         b = bs * bs * b0
-                        while b < a:
+                        while b < a and bs*sq_k0a <= sqMax:
                             n = k0 * b * (k0 * a3 + b)
-                            if n > paramMaxN:
-                                break
                             if TestSol(bs*sq_k0a, n, a, b):
                                 Sum += n
                             bs += 1
                             b = bs * bs * b0
                         ks = 2
                         k = ks * ks * k0
-                        sq_ka = ks * ks * sq_k0a
+                        sq_ka = k * sq_ab0
                         while sq_ka <= sqMax:
                             n = k * b0 * (k * a3 + b0)
                             if TestSol(sq_ka, n, a, b0):
                                 Sum += n
                             bs = 2
                             b = bs * bs * b0
-                            while b < a:
-                                if bs*sq_ka > sqMax:
-                                    break
+                            while b < a and bs*sq_ka <= sqMax:
                                 n = k * b * (k * a3 + b)
                                 if TestSol(bs * sq_ka , n, a, b):
                                     Sum += n
@@ -128,7 +124,7 @@ def main():
                                 b = bs * bs * b0
                             ks += 1
                             k = ks * ks * k0
-                            sq_ka = ks * ks * sq_k0a
+                            sq_ka = k * sq_ab0
             else:
                 break
         a += 1
