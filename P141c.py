@@ -14,6 +14,28 @@ def listprimes(n):
     return [2] + [2*i+1 for i in range(1,n//2) if sieve[i]]
 
 
+curListPrimes = [ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59, 61, 67, 71, 73, 79, 83, 89, 97,101]
+def getnextPrime():
+    global curListPrimes
+    for p in curListPrimes:
+        yield p
+    p1 = p + 2
+    while 1:
+        sqp1 = int(sqrt(p1))
+        for p in curListPrimes:
+            if p > sqp1:
+                break
+            if p1 % p == 0:
+                break
+        if p > sqp1:
+            curListPrimes.append(p1)
+            yield p1
+        p1 += 2
+
+
+
+
+
 SF = []  # array for squarefree part of numbers t from n=s**2 * t
 sfPivot = 1  # size of precomputed sqfree part
 sfMaxval = 1    # maValue accepted (=> for number of primes)
@@ -72,7 +94,7 @@ def getSF(val):
 
 def GetSquareFree(nbMax):
     squareFree = []
-    primes=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,0]
+    primes=getnextPrime()
     sieveSQ = [1] * (nbMax+1)
     for p in primes:
         p2=p*p
@@ -117,79 +139,102 @@ def CFSQ(N):
 
 
 
+
+def computePgcd(bsq):
+    primeforPgcd = getnextPrime()
+    tbPgcd = [1] * bsq
+    tbPgcd[0] = bsq
+    b1=bsq
+    for p in primeforPgcd:
+        if b1 == 1:
+            break
+        if p*p > bsq:
+            p = b1
+        elif b1 % p: # p dont divide b1
+            continue
+        for pt in range(p,bsq,p):
+            tbPgcd[pt] *= p
+        b1 //= p
+    if p ==0:
+        print("FATAL ERROR not enough primes for gcd pre-compute")
+        exit(0)
+    return tbPgcd
+
+
+
 expMaxn=12
 if len(sys.argv) > 1:
     expMaxn = int(sys.argv[1])
 
-Sum =0
+Sum = 0
 def main():
     global Sum,expMaxn
     paramSFpivot=2000
-    paramMAXSF=64000000
-    paramSquareFree=5000
     paramMaxN = int(10 ** expMaxn)
-    initSF(paramSFpivot,paramMAXSF)
-    squareFree=GetSquareFree(paramSquareFree)
+    maxB0 = int(pow(paramMaxN, 1 / 6.0))
+#    paramMAXSF = 64000000
+    initSF(paramSFpivot,maxB0*maxB0)
+    squareFree=GetSquareFree(maxB0)
     Sol = []
     Sum = 0
     def AddSol141(n, a, b, k):
         global Sum
         Sol.append((n,a,b,k))
         print("\r",a,"/",b,"x",k,"  ",n,"             ",sep='',end='') ; sys.stdout.flush()
+#        print(a,"/",b,"x",k,"  ",n,"             ",sep='')
         Sum += n
 
-    a=2
-    a3=a*a*a
-    while a3 < paramMaxN:
-        for b0 in squareFree:
-            if b0 >= a or (a3+1)*b0*b0*b0 >= paramMaxN:
-                break
-            if pgcd(a,b0) > 1:
-                continue
-            maxD  = paramMaxN // (a3 * b0 * b0 * b0)
- #           print("(",a,b0,"=)",end='')
-            cfsq = CFSQ(a3*b0)
-            (N1,D1) = next(cfsq)
-            if D1 == 0:
-                continue
-            while 1:
-                k0 = D1*D1
-                if k0 * k0 > maxD:
-                    break
-                delta = N1 * N1 - a3 * b0 * k0
-                bbs = pgcd (b0, delta)
-                if b0 * delta < a * bbs:
-                    bf = getSF(delta)
-                    if bf == 0:
-                        print("FATAL ERROR get square free of",delta)
-                        bf = getSF(delta)
-                        exit(0)
-                    b1 = b0 // bbs
-                    b = b1 * (delta // bbs) * bf
-                    if b < a:
-                        k = k0 * b1 * b1 * bf
-                        if k * b * ( k * a3+b) > paramMaxN:
+    for b0 in squareFree:
+        maxA3 = paramMaxN // (b0 * b0 * b0)
+        pgcdB0 = computePgcd(b0)
+        a = b0+1
+        a3 = a * a * a
+        aModb0 = 0
+        while a3 <= maxA3:
+            aModb0 += 1
+            if aModb0 == b0:
+                aModb0 = 0
+            if pgcdB0[aModb0] == 1:
+                maxD  = paramMaxN // (a3 * b0 * b0 * b0)
+                cfsq = CFSQ(a3*b0)
+                (N1,D1) = next(cfsq)
+                if D1 != 0:
+                    while 1:
+                        k0 = D1*D1
+                        if k0 * k0 > maxD:
                             break
-                        n = k * b * (k * a3 + b)
-                        if pgcd(a, b) == 1:
-                            AddSol141(n, a, b, k)
-                            ksMax = paramMaxN // n
-                            ks = 2; ks2 = ks*ks
-                            while b * ks2 < a and ks2 * ks2 * ks2 <= ksMax:
-                                if pgcd(ks, a) == 1:
-                                   AddSol141( ks2 * ks2 * ks2 * n, a, ks2 * b, ks2 * k)
-                                ks += 1
-                                ks2 = ks * ks
- #               print("(",N1,"/",D1,"x",k0,")",end='')
-                (N1, D1) = next(cfsq)
-                k0 = D1 * D1
-                if k0 * k0 > maxD:
-                    break
-                (N1, D1) = next(cfsq)
-#            print(" ")
-        a += 1
-        a3=a*a*a
-    Sol.sort(key=lambda sol: (sol[1],sol[2]))
+                        delta = N1 * N1 - a3 * b0 * k0
+                        bbs = pgcdB0[delta % b0]
+                        if b0 * delta < a * bbs:
+                            bf = getSF(delta)
+                            if bf == 0:
+                                print("FATAL ERROR get square free of",delta)
+                                bf = getSF(delta)
+                                exit(0)
+                            b1 = b0 // bbs
+                            b = b1 * (delta // bbs) * bf
+                            if b < a:
+                                k = k0 * b1 * b1 * bf
+                                if k * b * ( k * a3+b) > paramMaxN:
+                                    break
+                                n = k * b * (k * a3 + b)
+                                if pgcd(a, b) == 1:
+                                    AddSol141(n, a, b, k)
+                                    ksMax = paramMaxN // n
+                                    ks = 2; ks2 = ks*ks
+                                    while b * ks2 < a and ks2 * ks2 * ks2 <= ksMax:
+                                        if pgcd(ks, a) == 1:
+                                            AddSol141( ks2 * ks2 * ks2 * n, a, ks2 * b, ks2 * k)
+                                        ks += 1
+                                        ks2 = ks * ks
+                        (N1, D1) = next(cfsq)
+                        k0 = D1 * D1
+                        if k0 * k0 > maxD:
+                            break
+                        (N1, D1) = next(cfsq)
+            a += 1
+            a3=a*a*a
+    Sol.sort(key=lambda sol: (sol[0],sol[1]))
     print("\n")
     for (n,a,b,k) in Sol:
         print(a,"/",b,"x",k,"\t",n,sep='')
