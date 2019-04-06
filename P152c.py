@@ -11,7 +11,7 @@ small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 
 LP_powpList = []
 LP_den_ppcm = 1
 
-
+# global levels context LS
 LS_numLevel=0
 LS_Elem=[]
 LS_Constraint=1
@@ -21,6 +21,7 @@ LS_fact=1
 LS_usedVal=[2]
 LS_cumPpcm=1
 
+# global precomputed results LV for one level
 LV_nbSum=0
 LV_index=[]
 LV_maxSum=0
@@ -62,7 +63,6 @@ def ListPowp(maxN):
                 if isFound:
                     break
                 sumInv.extend(sumSup)
-#               print(sumInv, "_")
             if isFound:
                 break
             powp = powp // p
@@ -80,6 +80,7 @@ def pgcd(a, b):
         a, b = b, a % b
     return a
 
+# precompute the next level, check that it remains at least one coefficent for the powp
 def nextLevelState():
     global LS_numLevel, LS_usedVal , LS_Elem, LS_Constraint, LS_fact, LS_ppcm,LS_PP,LS_cumPpcm
     global LP_curPowp, LP_powpList , LP_den_ppcm
@@ -140,19 +141,8 @@ def compute_level(Elem , constraint):
         LV_index[i].sort()
 
 
-
-
-
-# start global variables
-
-# maximum number
-# maxn = 80
-
-
 maxn = int(sys.argv[1])
 
-
-# end global variables
 
 def Print_LV():
     for modL in range(0, len(LV_index)):
@@ -179,6 +169,7 @@ def main():
     mode=0
     count0=[]
     offsetS0=0
+    # first mode histo In and histo out
     while nextLevelState():
         compute_level(LS_Elem,LS_Constraint)
         factS = LS_fact * LS_fact
@@ -207,6 +198,7 @@ def main():
             modSum = sum - intSum * LS_Constraint
             for intLV in LV_index[modSum]:
                 if intSum < intLV:
+                    print("STOP ", (intSum-intLV, intSum, modSum), explain, "-", (intLV, intSum, modSum), " In",explain1[newSum])
                     break
                 nout +=1
                 newSum = intSum - intLV
@@ -228,6 +220,7 @@ def main():
         else:
             print("*** => OUNT_COUNT ***",end='')
             break
+# transition mode : histo in, count out
     if mode == 1:
         count1 = [0]*nbCountS1
         nout =0
@@ -246,7 +239,9 @@ def main():
         (count0,count1)=(count1,count0)
         offsetS0=offsetS1
         print("=>LenH=", nout, "/", len(count0))
+# for the last mode powp are sorted by decreasing p**k (before by decreasing (p,k)
     LP_powpList.sort(reverse=True,key=getPowp)
+# final mode count in, count out
     while nextLevelState():
         compute_level(LS_Elem, LS_Constraint)
         #        Print_LV()
