@@ -1,0 +1,37 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+
+\begin{align*}
+	&\text{let k the number of persons not passed. In this group we design by :}\\
+	&\text{  - }n_{2} \text{ the number with 2 slips in the hat.}\\
+	&\text{  - }n_{1} \text{ the number with 1 slip in the hat.}\\ 	
+	&\text{  - }n_{0} \text{ the number with 0 slip in the hat.}\\
+	&\text{Let }n_{p}\text{ the number of slips in the hat from persons already passed}\\
+	&\text {We have the relations }k=n_{2}+n_{1}+n_{0}\text{ ; }  n_{p}=2\times (k-n_{2})-n_{1}.\\
+	&\text{By recursion on k from N to 2 we compute the probability of }P_{k}(n_{2},n_{1})\\
+	&\textit{Remark : as }k=n_{2}+n_{1}+n_{0}\textit{ the number of states }(n_{2},n_{1})
+      \textit{ is equal to }\frac{k(k+1)}{2}\\
+    &\text{FIRST we choose the next people to pass among the k}\\
+	&\text{  - from }n_{2} \text{ with proba }p=\frac{n_{2}}{k}\text{ ; }\Rightarrow n_{2}=n_{2}-1\\
+	&\text{  - from }n_{1} \text{ with proba }p=\frac{n_{1}}{k}\text{ ; }\Rightarrow n_{1}=n_{1}-1\\
+	&\text{  - from }n_{0} \text{ with proba }p=\frac{n_{0}}{k}\text{ No action }\\
+	&\text{  The number of different possible couples of slip is equal to } N2=\binom{2\times n_{2}+n_{1}+n_{p}}{2}\\
+	&\text{SECOND, we treats the different couples: }\\
+	&\text{ - }n_{2}\otimes n_{2}\ \ IF(n_{2}\geq2)\text{ with proba }p=\frac{4\times\binom{ n_{2}}{2}}{N2}\text{ ; }\Rightarrow P_{k-1}(n_{2}-2,n_{1}+2)\\
+	&\text{ - }[n_{2}]\ \ IF(n_{2}>0)\text{ with proba }p=\frac{n_{2}}{N2}\text{ ; }\Rightarrow P_{k-1}(n_{2}-1,n_{1})\\
+	&\text{ - }n_{2}\otimes n_{1}\ \ IF(n_{2}>0\text{ and }n_{1}>0)\text{ with proba }p=\frac{2\times n_{2}\times n_{1}}{N2}\text{ ; }\Rightarrow P_{k-1}(n_{2}-1,n_{1})\\
+	&\text{ - }n_{2}\otimes n_{p}\ \ IF(n_{2}>0\text{ and }n_{p}>0)\text{ with proba }p=\frac{2\times n_{2}\times n_{p}}{N2}\text{ ; }\Rightarrow P_{k-1}(n_{2}-1,n_{1}+1)\\
+	&\text{ - }n_{1}\otimes n_{1}\ \ IF(n_{1}\geq2)\text{ with proba }p=\frac{\binom{ n_{1}}{2}}{N2}\text{ ; }\Rightarrow P_{k-1}(n_{2},n_{1}-2)\\
+	&\text{ - }n_{1}\otimes n_{p}\ \ IF(n_{1}>0\text{ and }n_{p}>0)\text{ with proba }p=\frac{n_{1}\times n_{p}}{N2}\text{ ; }\Rightarrow P_{k-1}(n_{2},n_{1}-1)\\
+	&\text{ - }n_{p}\otimes n_{p}\ \ IF(n_{p}\geq2)\text{ with proba }p=\frac{\binom{ n_{p}}{2}}{N2}\text{ ; }\Rightarrow P_{k-1}(n_{2},n_{1})\\
+	&\text{END: the result is equal to } P=P_{1}(1,0)+P_{1}(0,1) 		
+\end{align*}
+
+
+
+\end{document}

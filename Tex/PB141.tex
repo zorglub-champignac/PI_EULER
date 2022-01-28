@@ -1,0 +1,56 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\begin{document}
+
+\text{It is easy to show that each solution is of the form:}
+\begin{align*}
+	& r=k\cdot b^{2} \\
+	& d=k\cdot a \cdot b \\
+	& q=k\cdot a^{2}\\
+\end{align*}
+\begin{equation}	 m^{2}=n=d \cdot q + r = b\cdot k \cdot \left(k \cdot a^{3}+b \right)\label{a:a}\end{equation}
+\begin{flushleft}
+$\text{where : a,b,k integers and } a > b \text{ ; }a\wedge b = 1   
+\textit{(d and q can be exchanged)}$ \\ 
+$\textit{For each element } m \textit{, we will design its square part by } m_{s} \textit{ and its square free part by } m_{f}$ \\
+$\text{so: }m=m_{f}\cdot m_{s}^{2} $ \\
+$ \text{if }  b=b_{f}\cdot b_{s}^{2} \text{ ; } k=k_{f}\cdot k_{s}^{2} $ \\
+$\text{as n is a perfect square and by} \left( \ref{a:a}\right):\  b_{f} \text{ is a divisor of k and } k_{f} \text{ is a divisor of b} $
+$\text{So if } \delta_{f}=\gcd (b_{f},k_{f})\ , \ b_{\bar{f}}=\frac{b_{f}}{\delta_{f}}\ , \  b_{\bar{s}}=\frac{b_{s}}{k_{\bar{f}}} \text{ we have } b=\delta_{f}\cdot b_{\bar{f}} \cdot k_{\bar{f}}^{2}\cdot b_{\bar{s}}^{2} $
+$\text{and respectively for k: }k_{\bar{f}}=\frac{k_{f}}{\delta_{f}}\ , \  k_{\bar{s}}=\frac{k_{s}}{b_{\bar{f}}}\ , \  k=\delta_{f}\cdot k_{\bar{f}} \cdot b_{\bar{f}}^{2}\cdot k_{\bar{s}}^{2} $ \\
+$\text{by replacing in} \left( \ref{a:a}\right):$
+\end{flushleft}
+\begin{align*}
+m^{2} & =\delta_{f}^{2}\cdot b_{\bar{f}}\cdot k_{\bar{f}}\cdot k_{\bar{f}}^{2}\cdot b_{\bar{s}}^{2} \cdot b_{\bar{f}}^{2}\cdot k_{\bar{s}}^{2} \left(\delta_{f}\cdot k_{\bar{f}} \cdot b_{\bar{f}} \left(a^{3} \cdot b_{\bar{f}}\cdot k_{\bar{s}}^{2}  + k_{\bar{f}}\cdot b_{\bar{s}}^{2} \right) \right)  \\
+ & =\delta_{f}^{2}\cdot b_{\bar{f}}^{2}\cdot k_{\bar{f}}^{2}\cdot k_{\bar{f}}^{2}\cdot b_{\bar{s}}^{2} \cdot b_{\bar{f}}^{2}\cdot k_{\bar{s}}^{2} \left(\delta_{f} \left(a^{3} \cdot b_{\bar{f}}\cdot k_{\bar{s}}^{2}  + k_{\bar{f}}\cdot b_{\bar{s}}^{2} \right) \right) \\
+  & =\delta_{f}^{2}\cdot b_{\bar{f}}^{4}\cdot k_{\bar{f}}^{4}\cdot  b_{\bar{s}}^{2} \cdot k_{\bar{s}}^{2} \left(a^{3} \cdot b_{f}\cdot k_{\bar{s}}^{2}  + k_{f}\cdot b_{\bar{s}}^{2} \right) \\
+  & = b \cdot k \cdot b_{\bar{f}}  \cdot k _{\bar{f}} \left(a^{3} \cdot b_{f}\cdot k_{\bar{s}}^{2}  + k_{f}\cdot b_{\bar{s}}^{2} \right) \\
+\end{align*}
+\begin{flushleft}
+$\text{ so: }n \text{ is perfect square } \Leftrightarrow \left(a^{3} \cdot b_{f}\cdot k_{\bar{s}}^{2}  + k_{f}\cdot b_{\bar{s}}^{2} \right)=\bar{m}^{2} \text{ is perfect square.}$ \\
+$\textit{Remark : we can only search the primary cases where }k_{\bar{s}}\wedge b_{\bar{s}}=1 \textit{ (prime)} $ \\ 
+$\textit{ and then find other solutions by adding a common square factor.} $ \\
+$\text{Next, we show that: }  \bar{m}= \lfloor k_{\bar{s}} \cdot \sqrt{a^{3} \cdot b_{f}} \rfloor +1 $ \\
+$\text{- obviously } \bar{m}> k_{\bar{s}} \cdot \sqrt{a^{3} \cdot b_{f}} $  \\
+$\text{- and } \bar{m}< k_{\bar{s}} \cdot \sqrt{a^{3} \cdot b_{f}}+1 \Leftrightarrow \bar{m}^{2} < \left(k_{\bar{s}} \cdot \sqrt{a^{3} \cdot b_{f}}+1  \right)^{2} $\\ 
+$ \Leftrightarrow m^{2} < b \cdot k \cdot b_{\bar{f}}  \cdot k _{\bar{f}} \left(k_{\bar{s}} \cdot \sqrt{a^{3} \cdot b_{f}}+1  \right)^{2} $ \\ 
+$ \Leftrightarrow  m^{2} <  b \cdot k \cdot b_{\bar{f}}  \cdot k _{\bar{f}} \left( a^{3} \cdot b_{f}\cdot k_{\bar{s}}^{2} + 2 \cdot k_{\bar{s}} \cdot \sqrt{a^{3} \cdot b_{f}} +1 \right)  $ \\
+$ \Leftrightarrow  m^{2} < b \cdot k^{2} \cdot a^{3} + b \cdot k \cdot a \cdot 2 \cdot b_{\bar{f}}  \cdot k _{\bar{f}} \cdot \sqrt{a \cdot b_{f}} + ... $ \\
+$\text { always true from (1) and } b < a $ \\
+$\text{It conducts to the algorithm:} $ \\
+$\text{- loop on couples }  \left(b_{f},k_{f} \right)\text{init: } b_{0}=\left(\frac{b_{f}}{\delta_{f}}\right)^{2}\ , \  k_{0}=\left(\frac{k_{f}}{\delta_{f}}\right)^{2} $ \\
+$\text{\ \ - sub-loop on } a > b_{0} \ and \ b_{0} \cdot k_{0}^{2} \cdot a^{3} < N $\\
+$\text{\ \ \ \  - sub-loop on } k_{\bar{s}} $ \\
+$\text{\ \ \ \ \ \  - compute }\ \bar{m}= \lfloor k_{\bar{s}} \cdot \sqrt{a^{3} \cdot b_{f}} \rfloor +1 \ $\\
+$\text{\ \ \ \ \ \ - check\ if\  }\left(\bar{m}^{2}-a^{3} \cdot b_{f}\cdot k_{\bar{s}}^{2}\right) \text{ if equal to }k_{f} \cdot b_{\bar{s}}^{2} \text{ for some } b_{\bar{s}} $\\
+$\text{\ \ \ \ \ \ \ \  - new primitive solution }b=b_{0} \cdot k_{f} \cdot b_{\bar{s}}^{2} \ , \ k=k_{0} \cdot k_{\bar{s}}^{2}\text{ if  }b < a \ , \ n<N$ \\
+$\text{\ \ \ \ \ \ \ \ \ \  - add a common square factor to b and k while }b < a \ , \ n<N$ \\
+$\textit{-Remark, for the main loop: } lcm\left(b_{f},k_{f}\right) < N^{1/6}  
+ \textit{ as } a<b \ , \ n>b\cdot k^{2} \cdot a^{3} $
+\end{flushleft} 
+
+\end{document}

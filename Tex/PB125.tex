@@ -1,0 +1,21 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+	&\text{For a palindrom N, equal to a sum of n consecutive squares from k+1 to k+n}\\	
+	&N=\sum_{i=1}^{i=n+k}i^2-\sum_{i=1}^{i=k}i^2=\frac{n\times [6 k^2 + 6 k(n+1) + (n+1)(2 n+1) ]}{6}\\
+	&\Leftrightarrow \ 6N=n\times [6 k^2 + 6 k(n+1) + (n+1)(2 n+1) ] \text{ (1)}\\
+	&\Leftrightarrow \  6 k^2 + 6 k(n+1) + (n+1)(2 n+1)-\frac{6N}{n} =\ 0\\
+	&\Leftrightarrow \ P[k]=6 k^2 + k \times b + c -\frac{6N}{n} = 0\text { with }b=6(n+1)\ ,\ c=(n+1)(2 n+1)\\
+	&\text{for }k\geqslant 0\text{, (1) }\Rightarrow\ 6N\geqslant n\times c\\
+	&\text{so the only positive solution is } k=\frac{-b+\sqrt{\Delta}}{12} \text{ with }\Delta=b^2-24( c -\frac{6N}{n})\\
+	&\text{and k integer} \Longleftrightarrow \Delta \text{ is a perfect square}\\
+\end{align*}
+
+
+
+\end{document}

@@ -1,0 +1,36 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\begin{document}
+	
+
+
+\begin{equation}
+\text{It is easy to see that:  }
+N_{i}=\sum
+_{\frac{r^{2}}{(i+1)^{2}} \leqslant x^{2}+y^{2} < \frac {r^{2}}{i^{2}}} \delta_{gcd(x,y)=1}
+\end{equation}
+
+\begin{equation}
+\text{So, if  }D_{i}=\sum
+_{ x^{2}+y^{2} < \frac {r^{2}}{i^{2}}} \delta_{gcd(x,y)=1}
+\text{ then } N_{i}=D_{i}-D_{i+1} 
+\end{equation}
+$
+\text{ To compute }D_{i} \text{ same methods as for problem 153 can be used :}
+$
+\begin{equation}
+\text{So, if  }C_{i}=\sum
+_{ x^{2}+y^{2} < \frac {r^{2}}{i^{2}}}1
+\text{ , then } 
+D_{i} = C_{i} - \sum
+_{  2\leqslant j \ ;\  i \times j < r  } D_{i\times j}
+\end{equation}
+
+$
+\lfloor \frac{r^{2}}{i^{2}}\rfloor
+$
+\end{document}

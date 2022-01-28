@@ -1,0 +1,28 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+\begin{align*}
+	&\text{ Let }N=N_{L}=d_{0}d_{1}...d_{L}\\
+	&\text{ where }d_{l}\text{ are the digits of N, }d_{0}\text{ is the most significant digit}\\
+	&\text{ and } N_{l}=d_{0}d_{1}..d_{l}\text{ so }N_{l+1}=10 \times N_{l}+d_{l+1}\\
+&\text{ Define by }\sigma_{l}=\sum_{k=0}^{k\leq l}d_{k}\text{ ,}
+\text{ the sum functions }S_{l}^{*}(k)=\sum_{\stackrel{n=1}{d(n)=k}}^{n < N_{l}}n\\
+&\text{ and the count functions }C_{l}^{*}(k)=\sum_{\stackrel{n=1}{d(n)=k}}^{n < N_{l}}1\\
+&\text{We have the recursive formulas : }\\
+&\text{(1) }S_{l+1}^{*}(k)=\sum_{d=0}^{d\leq 9}\{10 \times S_{l}^{*}(k-d)+d \times C_{l}^{*}(k-d)\} 
++ \sum_{d=0}^{d < d_{l+1}}\{(10 \times N_{l}+d)\delta(k==\sigma_{l}+d)\}\\
+&\text{(2) }C_{l+1}^{*}(k)=\sum_{d=0}^{d\leq 9}C_{l}^{*}(k-d)
++ \sum_{d=0}^{d < d_{l+1}}\delta(k==\sigma_{l}+d)\\
+&\text{The final result is computed by: }
+F(N_{L})=\sum_{k=1}^{k < kmax}\frac{S_{L}^{*}(k)}{k}+\frac{N_{L}}{\sigma_{L}}\\
+\end{align*}
+\begin{align*}
+&\textit{Remarks :}\\
+&\textit{a) the functions }C_{l}^{*},S_{L}^{*}\textit{ exclude the limit values }N_{l}\\
+	&\textit{b) range for k for functions }C_{l}^{*},S_{L}^{*} \textit{ is } 0< k \leq 9\times l\\
+	&\textit{c) Recursion (1) and (2) on }C_{l}^{*},S_{l}^{*}\textit{ can be done inplace by reverse order on k, so we need only }9\times L \textit{ values.}\\
+\end{align*}
+\end{document}

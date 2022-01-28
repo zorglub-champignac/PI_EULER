@@ -1,0 +1,55 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+
+\begin{align*}
+	&S(n)=\sum_{\stackrel{i,j,k,l}{0<i<j<k<l\leq n}}(a_{i}+a_{j}+a_{k}+a_{l})\times 1_{a_{i}<a_{j}<a_{k}<a_{l}} 
+	=  \sum_{\stackrel{i,j,k,l}{0<i<j<k<l\leq n}}((a_{i}+a_{j})+(a_{k}+a_{l}))\times 1_{a_{i}<a_{j}<a_{k}}\times 1_{a_{k}<a_{l}}\\
+	&=  \sum_{\stackrel{i,j,k,l}{0<i<j<k<l\leq n}}((a_{i}+a_{j})\times 1_{a_{i}<a_{j}<a_{k}}\times 1_{a_{k}<a_{l}}
+	+(a_{k}+a_{l})\times 1_{a_{i}<a_{j}<a_{k}}\times 1_{a_{k}<a_{l}})\\
+	&=\sum_{0<k\leq n}
+	\{ \sum_{\stackrel{i,j}{0<i<j<k}}((a_{i}+a_{j})\times 1_{a_{i}<a_{j}<a_{k}}) 
+	\times (\sum_{\stackrel{l}{k<l\leq n}} 1_{a_{k}<a_{l}}) \}
+	 +\sum_{0<j\leq n} \{ \sum_{\stackrel{i}{0<i<j}}1_{a_{i}<a_{j}}
+	\times (\sum_{\stackrel{k,l}{j<k<l\leq n}} ((a_{k}+a_{l})\times 1_{a_{j}<a_{k}<a_{l}})\} \\ 
+	& = \sum_{0<k\leq n} S_{L2}(k)\times W_{H}(h) + \sum_{0<j\leq n} S_{H2}(j)\times W_{L}(j) \\
+\end{align*}
+\begin{align*}
+	&\text{Where:} \\
+	&W_{L}(j)=\sum_{\stackrel{i}{0<i<j}}1_{a_{i}<a_{j}}\textit{ (resp.) }W_{H}(k)=\sum_{\stackrel{l}{k<l\leq n}}1_{a_{k}<a_{l}}\\
+	&S_{L2}(k) = \sum_{\stackrel{i,j}{0<i<j<k}}((a_{i}+a_{j})\times 1_{a_{i}<a_{j}<a_{k}})\textit{ (resp.) }
+		S_{H2}(j) = \sum_{\stackrel{k,l}{j<k<l\leq n}}((a_{k}+a_{l})\times 1_{a_{j}<a_{k}<a_{l}}) \\
+		&S_{L2}(k)\text{ can be computed by :} \\
+		&S_{L2}(k)
+		=\sum_{\stackrel{j}{0<j<k}}1_{a_{j}<a_{k}}(S_{L1}(j)+ a_{j}\times W_{L}(j))
+		\text{ with: }S_{L1}(j)=\sum_{\stackrel{i}{0<i<j}} a_{i}\times 1_{a_{i}<a_{j}} \\
+\end{align*}
+\begin{align*}
+&\text{We can compute by Fenwick tree for any function f(i) } F(i\rightarrow f(i),j)=\sum_{\stackrel{i}{0<i<j}} f(i)\times 1_{a_{i}<a_{j}}\\
+&\textit{(resp) }F^{T}(i\rightarrow f(i),j)=\sum_{\stackrel{i}{j<i\leq n}} f(i)\times 1_{a_{j}<a_{i}}\\
+&\text{So the algorithm is:}\\
+&W_{L}(j)=F(i\rightarrow 1,j)\\ 
+& S_{L1}(j)=F(i\rightarrow a_{i},j)\ ; \  S_{L1*}(j)=S_{L1}(j)+a_{j}W_{L}(j)\ ; \ 
+S_{L2}(j)=F(i\rightarrow S_{L1*}(j),j)\\
+&W_{H}(j)=F^{T}(i\rightarrow 1,j)\\ 
+&S_{H1}(j)=F^{T}(i\rightarrow a_{i},j)\ ; \ S_{H1*}(j)=S_{H1}(j)+a_{j}W_{H}(j)\ ; \  
+S_{H2}(j)=F{T}(i\rightarrow S_{H1*}(j),j)\\
+&S(n)=\sum_{\stackrel{j}{0<j\leq n}}S_{L2}(j)W_{H}(j)+S_{H2}(j)W_{L}(j)\\
+\end{align*}
+\begin{align*}	
+	&S_{L2}(k)=\sum_{\stackrel{i,j}{0<i<j<k}}((a_{i}+a_{j})\times 1_{a_{i}<a_{j}}\times1_{a_{j}<a_{k}})
+	=\sum_{\stackrel{j}{0<j<k}}1_{a_{j}<a_{k}}
+	\times \sum_{\stackrel{i}{0<i<j}} ((a_{i}+a_{j})\times 1_{a_{i}<a_{j}})\\
+	&=\sum_{\stackrel{j}{0<j<k}}1_{a_{j}<a_{k}} \times S_{L1*}(j)\\
+	&\text{with: }
+	 S_{L1*}(j)=\sum_{\stackrel{i}{0<i<j}} (a_{i}+a_{j})\times 1_{a_{i}<a_{j}}
+	 = \sum_{\stackrel{i}{0<i<j}} ((a_{i}\times 1_{a_{i}<a_{j}})+a_{j}\times \sum_{\stackrel{i}{0<i<j}} 1_{a_{i}<a_{j}}\\
+	 &=S_{L1}(j)+a_{j}\times W_{L}(j)\text{ with: }S_{L1}(j)=\sum_{\stackrel{i}{0<i<j}} a_{i}\times 1_{a_{i}<a_{j}}
+\end{align*}
+
+$	\textit{Remark : to implement the division by 2, we compute } R_{\Delta -1} $
+\end{document}

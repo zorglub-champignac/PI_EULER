@@ -1,0 +1,16 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+$$
+S = \sum_{\stackrel{3 n_3+2 n_2+n_1=18}{n_3+n_2+n_1\leq10}} \frac{18!}{(3!)^{n_3}(2!)^{n_2}}\times \frac{\frac{9\times 9!}{(10-n_3-n_2-n_1)!}}
+{n_3!\ n_2!\ n_1!} 
+$$
+Computing can be done without overflow in 64 bits by :
+$$
+\frac{18!}{(3!)^{n_3}(2!)^{n_2}\ n_1!}\times 
+\frac{9\times 9!}{(10-n_3-n_2-n_1)!\ n_3!\ n_2!}
+$$
+\end{document}

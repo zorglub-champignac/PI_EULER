@@ -1,0 +1,33 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+$$  
+  (s+q)\sin (\beta) = (s+p) \sin(\alpha)
+$$
+$$
+	as\: SP_{1} = s+p \:and\: CP_{1} = s+q
+$$
+$$ \beta(s+q) = \alpha(s+p) + k \pi\:
+$$
+$$
+   where\: k\in\{1,2,...,s+p-1\}
+$$
+$$
+Sizes=(Smax,\frac{s+p}{2\pi},\frac{s+q}{2\pi})
+$$
+$$
+\alpha_{max},\beta_{max}\:and\:k_{max}=\lfloor\beta_{max}(s+q)+\alpha_{max}(s+p)\rfloor
+$$
+
+\begin{align*}
+& \text{and }P(Last=k)=\frac{L-k}{\sum_{k=0}^{N-1}(L-k)}\\
+& \text{During the recursion we need only to compute 2N terms :}\\
+& \textit{    - P}_{E}(k,k):k=0..N \text{ for the back race}\\
+& \textit{    - P}_{E}(n,L-N+n):n=0..N \text{ for the front race}\\
+& \text{Remark : In this explanation }L=1800/40	
+\end{align*}
+
+\end{document}

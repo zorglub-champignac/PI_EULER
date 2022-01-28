@@ -1,0 +1,56 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+	&\text{Let the generative function for n drones }f_{n}(x)= \sum_{k=0}^{\propto}{p_{n,t=k}\ x^{k}}\\
+	&\text{Where }p_{n,t=k}\text{ is the probability that the last drone starts at time }t=k \\
+	&\text{by decomposing an even for n+1 drones with the time the }n^{th} \text{ start :}\\
+	&f_{n+1}(x)=f_{n}(\frac{n}{n+1}x)\times g_{n+1}(x)\\
+	&\text{ where } g_{n+1}(x)=\sum_{k=0}^{\propto}\frac{1}{n+1}(\frac{n}{n+1})^{k}x^{k+1}=\frac{x}{n+1}\times \frac{1}{1-\frac{n}{n+1}x}=\frac{x}{n+1-nx}\\
+	&\text{so we have }f_{n+1}(x)=f_{n}(\frac{n}{n+1}x)\times \frac{x}{n+1-nx}\text{ and }f_{1}(x)=x\\
+\end{align*}
+	$$ \text{ it is easy to show that :}f_{n}(x)=\frac{1}{n}x^{n} \prod _{k=1}^{n-1}\frac{1}{n-kx} $$
+
+
+\begin{align*}
+&f_{n+1}(x)=f_{n}(\frac{n}{n+1}x)\times \frac{x}{n+1-nx}\\
+&=\frac{1}{n}(\frac{n}{n+1}x)^{n}\ (\prod _{k=1}^{n-1}\frac{1}{n-k(\frac{n}{n+1}x)})\times \frac{x}{n+1-nx}\\
+&=\frac{1}{n+1}x^{n+1}\ (\prod _{k=1}^{n-1}\frac{n}{n+1}\times \frac{1}{n-k(\frac{n}{n+1}x)})\times \frac{1}{n+1-nx}\\
+&=\frac{1}{n+1}x^{n+1}\ (\prod _{k=1}^{n-1} \frac{1}{n+1-kx})\times \frac{1}{n+1-nx}=\frac{1}{n+1}x^{n+1} \prod _{k=1}^{n} \frac{1}{n+1-kx}\\
+\end{align*}
+
+\begin{align*}
+&\text{By observing that the sum of drone speeds increases by one at each second, we have Sum(v)=t}\\
+&\text{ and so the traveled distance for end t=k is } S_{d}=1+2+...+k=\frac{k(k+1)}{2}\\
+&\text{so the expected distance is }E(n)=\frac{1}{n}\ \sum_{k=0}^{\propto}{p_{n,t=k}\ \frac{k(k+1)}{2}}\\
+&\text{as }f^{'}_{n}(x)= \sum_{k=1}^{\propto}{p_{n,t=k}\ k\ x^{k-1}}\text{ and }f^{''}_{n}(x)= \sum_{k=1}^{\propto}{p_{n,t=k}\ k(k-1)\ x^{k-2}}\\ 
+&\text{\ \ \ }f^{'}_{n}(1)= \sum_{k=1}^{\propto}{p_{n,t=k}\ k}\text{ and }f^{''}_{n}(1)= \sum_{k=1}^{\propto}{p_{n,t=k}\ k(k-1)}\\
+&\text{and }\sum_{k=0}^{\propto}{p_{n,t=k}\ k(k+1)}=f^{''}_{n}(1)+2f^{'}_{n}(1)\\
+&\text{so }E(n)=\frac{1}{n}(\frac{f^{''}_{n}(1)}{2}+f^{'}_{n}(1))\\
+&\text{We can show :}f^{'}_{n}(1)=nS_{1}(n)\text{ and }
+f^{''}_{n}(1)=n^{2}S_{2}(n)+n^{2}S_{1}(n)^{2}-2nS_{1}(n)\\
+&\text{so } E(n)=\frac{1}{n}(\frac{f^{''}_{n}(1)}{2}+f^{'}_{n}(1))=\frac{n}{2}[S_{2}(n)+(S_{1}(n))^{2}]\\
+\end{align*}
+
+\begin{align*}
+&\text{ where }S_{1}(n)=\sum_{k=1}^{n}\frac{1}{k}\text{ and }S_{2}(n)=\sum_{k=1}^{n}\frac{1}{k^{2}} \\
+	&\text{From }f_{n}(x)=\frac{1}{n}x^{n} \prod _{k=1}^{n-1}\frac{1}{n-kx}\text{ and }f_{n}(1)=1\\
+	&f^{'}_{n}(x)=f_{n}(x)\times [\frac{n}{x}+\sum_{k=1}^{n-1}\frac{k}{n-kx}]\\
+	&\text{so }f^{'}_{n}(1)=f_{n}(1)\times [n+\sum_{k=1}^{n-1}\frac{k}{n-k}]=1+\sum_{k=1}^{n-1}(1+\frac{k}{n-k})\\
+	&=1+\sum_{k=1}^{n-1}\frac{n}{n-k}
+	=n\sum_{k^{'}=1}^{n}\frac{1}{k{'}}=nS_{1}(n)\\
+	&\text{From }f^{'}_{n}(x)=f_{n}(x)\times [\frac{n}{x}+\sum_{k=1}^{n-1}\frac{k}{n-kx}]\\
+	&f^{''}_{n}(x)=f^{'}_{n}(x)\times [\frac{n}{x}+\sum_{k=1}^{n-1}\frac{k}{n-kx}]+f_{n}(x)\times [\frac{n}{x}+\sum_{k=1}^{n-1}\frac{k}{n-kx}]^{'}\\
+	&=f^{'}_{n}(x)\times [\frac{n}{x}+\sum_{k=1}^{n-1}\frac{k}{n-kx}]+f_{n}(x)\times [\frac{-n}{x^{2}}+\sum_{k=1}^{n-1}(\frac{k}{n-kx})^{2} ]\\
+	&\text{so }f^{''}_{n}(1)=n^{2}S_{1}(n)^{2}+[-n+\sum_{k=1}^{n-1}(\frac{k}{n-k})^{2}] \\
+	&=n^{2}S_{1}(n)^{2}-1+\sum_{k=1}^{n-1}((\frac{k}{n-k})^{2}-1)\\
+	&=n^{2}S_{1}(n)^{2}-1+\sum_{k=1}^{n-1}(\frac{2kn-2n^{2}+n^{2}}{(n-k)^2})\\
+	&=n^{2}S_{1}(n)^{2}-2-2\sum_{k=1}^{n-1}(\frac{n}{(n-k)})+1+\sum_{k=1}^{n-1}(\frac{n^{2}}{(n-k)^2})\\
+	&=n^{2}S_{1}(n)^{2}-2nS_{1}+n^{2}S_{2}(n)	
+\end{align*}
+
+\end{document}

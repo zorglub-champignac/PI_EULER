@@ -1,0 +1,29 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+
+\begin{align*}
+	f(n)&=L(n-1)+(n-2)\times L(n-2)+[\frac{(n-1)(n-2)}{2}-1]\times L(n-3)\\ &+\sum_{k=3}^{n-2}\frac{(n+k-3)!}{k!}\times [(n-1)(n-2)-k(k-1)]\times L(n-k-1) \\
+	&\textit{( Remark : L(0) don't is not used )}
+\end{align*}
+$$
+\text{we can compute }F_{k}=[(n-1)(n-2)-k(k-1)]\text{ by an addition with }
+   F_{k}= F_{k-1}-2(k-1)
+$$
+$$
+\text{and }\frac{1}{k!}\text{ recursively by }\frac{1}{k!}=k\times\frac{1}{(k+1)!}
+\textit{ ; only one inversion for }\frac{1}{n!}$$
+\begin{align*}
+	&\text {So we have 6 multiplications modulus(1 000 000 007) by coefficient:}\\
+	&\text{  - one for }\frac{1}{n!}\\
+	&\text{  - one for }\frac{1}{k!}\\
+	&\text{  - one for }(n+k-3)!\\
+	&\text{  - three for the product}(n+k-3)!\times\frac{1}{k!}\times F_{k}\times  L(n-k-1)\\  
+\end{align*}
+
+
+\end{document}

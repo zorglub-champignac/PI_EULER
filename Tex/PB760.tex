@@ -1,0 +1,37 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+	&\text{ As }m\vee n = m\wedge n + m\oplus n\\
+	&\text{We must only compute }f(n)=\sum_{k=0}^{k\leq n}(n-k)\vee k 
+	\text{ and } G(N)=2\times \sum_{n=0}^{n\leq N}f(n)\\
+	&\text {We have the recursive formulas : }\\
+	&(1a)\ \ f(2n+1)=4\times  f(n) + 2\times (n+1)\\
+	&(1b)\ \ f(2n)=2 \times f(n-1)+2 \times f(n)+n  \\
+	&(2a)\ \ g(2n+1)=8\times g(n)-2\times f(n)+\frac{(3n+4)(n+1)}{2}\\
+	&(2b)\ \ g(2n)=8\times g(n)-6\times f(n)+3\times n\times(n+1)\\
+\end{align*}
+\begin{align*}
+	&\textit{ Example of demo for (1b):}\\
+	&f(2n)=\sum_{k=0}^{k\leq 2n}(2n-k)\vee k=\sum_{k=0}^{k\leq n}(2n-2k)\vee 2k+\sum_{k=0}^{k\leq n-1}(2n-2k-1)\vee (2k+1)\\
+	&=\sum_{k=0}^{k\leq n}2((n-k)\vee k)+\sum_{k=0}^{k\leq n-1}((2n-2-2k+1)\vee (2k+1))\\
+	&=2\sum_{k=0}^{k\leq n}((n-k)\vee k)+\sum_{k=0}^{k\leq n-1}((2n-2-2k)\vee (2k))+1\\
+	&=2\times f(n)+2\sum_{k=0}^{k\leq n-1}((n-1-k)\vee k)+\sum_{k=0}^{k\leq n-1}1\\
+	&=2\times f(n)+2\times f(n-1)+n\\
+\end{align*}
+\begin{align*}
+	&\text{ we can construct N bit by bit from the most significant bit by:}\\
+	& n_0=0\ ,\ n_1=2 \times n_0+ b_1\ ,\ n_2=2\times n_1+b_2\\
+	&\text{... } n_k=2\times n_{k-1}+b_k\text{ ... }N=2\times n_{nb-1}+b_{nb}\\
+	&\text{where } b_1 b_2...b_k...b_{nb} \text{ are the bits in base 2 for N, }b_1\textit   { most significant}\\
+	&\text{Now we can compute by recursion } \{g(n_k),f(n_k),f(n_k-1)\}\\
+	&\text{using (2a) and (2b) for }g(n_k)\\
+	&\text{and noting for }(f(n_k),f(n_k-1))\text{ that if:}\\
+	&\ \ \ b_k=1\ then \ (n_k,n_k-1)=(2\times n_{k-1}+1,2\times n_{k-1})\\
+	&\ \ \ b_k=0\ then \ (n_k,n_k-1)=(2\times n_{k-1},2\times n_{k-1}-1)=(2\times n_{k-1},2\times (n_{k-1}-1)+1)\\	
+\end{align*}	
+\end{document}

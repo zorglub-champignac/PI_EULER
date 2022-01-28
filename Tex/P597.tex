@@ -1,0 +1,27 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+$$  \textit{P}_{E}(n,L) =\sum_{k=0}^{n-1}P(Last=k)\times(\textit{P}_{E}(k,k)\otimes\textit{P}_{E}(n-k-1,L-k-1))\\
+$$
+
+$$
+Where:\textit{P}_{E}(A)\otimes\textit{P}_{E}(B) = \begin{cases}
+\textit{P}_{E}(A)\times\textit{P}_{E}(B)+(1-\textit{P}_{E}(A))\times(1-\textit{P}_{E}(B)) 
+& k:even\\
+\textit{P}_{E}(A)\times(1-\textit{P}_{E}(B))+(1-\textit{P}_{E}(A))\times\textit{P}_{E}(B) 
+& k:odd\\ 
+\end{cases}
+$$
+
+\begin{align*}
+& \text{and }P(Last=k)=\frac{L-k}{\sum_{k=0}^{N-1}(L-k)}\\
+& \text{During the recursion we need only to compute 2N terms :}\\
+& \textit{    - P}_{E}(k,k):k=0..N \text{ for the back race}\\
+& \textit{    - P}_{E}(n,L-N+n):n=0..N \text{ for the front race}\\
+& \text{Remark : In this explanation }L=1800/40	
+\end{align*}
+
+\end{document}

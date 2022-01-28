@@ -1,0 +1,39 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+$
+S(n) = 2^{i-1} + S(n-F_i) - S(F_{i+1}-n-3)
+\text{ with : } F_i \leq n < F_{i+1} \\
+\text{Let } L(n)=n-F_i \text{ and }  R(n)=F_{i+1}-n-3 \\
+\text{The recursion is : (1) } S(n) = 2^{i-1} + S(L(n)) - S(R(n)) \\
+\text{If we represent } n \text{ by its binary Zeckendorf decomposition the function }L\\ 
+\text {is equivalent to remove the hightest bit} \\
+\text{Ex: } 74=F_9+F_6+F_4+F_1=100101001b\\
+ \ \ L(100101001b)=1010001b=F_6+F_4+F_1=19=74-55\ \\
+ \ \ R(100101001b)=89-74-3=12=F_5+F_3+F_1=10101b\\
+ \\
+\text{Let } E_L=\{i\geq 0  ; L^{(i)}(n)\} \text{ and }{E}_R=\{i\geq 0  ; L^{(i)}(R(n))\} \\
+E_L=\{100101001b,101001b,1001b,1b\} \ ;\ E_R=\{10101b,101b,1b\} \\
+ \text{It can be proved that } R(E_L)\subset E_R \text{ and } R(E_R)\subset E_L \\
+$
+
+$
+\text{if } F_i \leq n < F_{i+1} \text{ and } F_j \leq n-F_i < F_{j+1} \\
+\text{we have } j \leq i-2 \textit{ (no consecutive Fibonacci numbers)} \\
+R(n)=F_{i+1}-n-3 \text{ and } R(L(n)) = F_{j+1}-(n-F_i) -3\\
+\text{so } R(n) = R(L(n)) + F_{i+1} - F_i - F_{j+1}= R(L(n)) + F_{i-1} - F_{j+1}\\
+\text{the Zeckendorf decomposition of } F_{i-1} - F_{j+1} \text{ uses Fibonacci with index }\geq j \\
+\text{the Zeckendorf decomposition of }R(L(n))\text{ uses Fibonacci with index }\leq j-2 \\
+R(L(n))\text{ is a low part of Zeckendorf decomposition of }R(n) \Rightarrow R(L(n)) \in E_R 
+$
+
+$
+\text{the method is simple : we compute }E_{LR}=E_L \bigcup E_R \\
+\text{ as foreach element }k \in E_{LR}\ L(k),R(k)\in E_{LR} \\
+\text{we can compute }S(k) \text{ using (1) for k in ascending order} 
+$
+\end{document}

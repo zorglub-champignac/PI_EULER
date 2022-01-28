@@ -1,0 +1,32 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+	&\text{First we show that for } k \geq 2 \text{ the decimal representation of }\frac{1}{3^{k}} \text{ has a periodicity divisor or equal to }3^{k-2}\\
+	&\text{As by recurrence }3^{k}\text{ divide }10^{3^{k-2}}-1 \text{ (True for k=2) and :} \\
+	&10^{3^{k-1}}-1=10^{3^{k-2}\times 3}-1=(10^{3^{k-2}})^{3}-1
+	=(10^{3^{k-2}}-1)( 10^{2\times 3^{k-2}}+10^{3^{k-2}}+1)\\
+	&\text{by recurrence }(10^{3^{k-2}}-1) \equiv 0 \ mod(3^{k})\text{ and }( 10^{2\times 3^{k-2}}+10^{3^{k-2}}+1) \equiv0  \ mod(3) 
+	\\
+\end{align*}
+
+\begin{align*}
+	&\text{For }\frac{1}{3^{k}}< (N-nb) \text{ the nb decimal digits beginning at the Nth  are identical }\\
+	&\text{to digits beginning at }N\ mod(3^{k-2})\text{ and also beginning at }N\ mod(3^{k-2+i})\ ,\ i\geq 0\\
+	&\text{As }3^{k}\text{ is a multiple of the period }3^{k-2}\text{ the nb decimal digits are the same for }\frac{1}{3^{k}10^{3^{k}}} \\
+\end{align*}
+
+\begin{align*}
+	&\text{ For }K=33\ :\ \frac{1}{3^{K}}< (10^{16}-nb) <10^{16}<\frac{1}{3^{K+1}}\\
+	&\text{ we need to compute nb digits begining at }10^{16}\text{ or }\Delta=(10^{16}\ mod \ 3^{K-2})\text{ of }\\ 
+	&\sum_{k=1}^{K}\frac{1}{3^{k}}=\frac{1-(\frac{1}{3})^{K+1}}{1-\frac{1}{3}}-1
+	=\frac{1-\frac{1}{3^{K}}}{2}  \\
+	&\text{ as we can compute digits for }\frac{1}{3^{K}}\text{ by recursion : } R_{0}=1\ ;\ d_{n+1}=\lfloor\frac{R_{n}}{3^{K}}\rfloor\ ; \ R_{n+1}=R_{n}-d_{n+1}\times 3^{K}\\
+	&\text{to skip }\Delta\text{ digits we compute }R_{\Delta}=(10^{\Delta}\ mod(3^{K})) \text{ by fast exponentation}.\\ 
+\end{align*}
+$	\textit{Remark : to implement the division by 2, we compute } R_{\Delta -1} $
+\end{document}

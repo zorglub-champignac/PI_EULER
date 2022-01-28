@@ -1,0 +1,34 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+% x = y+d , z=y-d
+% x x**2 - y**2 -z**2 = (4*d-y)* y
+% x so n=d1*d2
+% x d2=y ; 4*d-y=d1  <=> d = (d2+d1)/4
+%  z>0 <=> d<y <=> d2 < 3 * d1
+
+\begin{align*}
+ & Let \qquad x = y+d \:;\: z=y-d \\
+ & x^{2}-y^{2}-z^{2}= (4d-y) \times y\\
+ & so \qquad n=d_{1} \times d_{2}\\
+ & with \qquad d_{2}=y \:;\: 4d-y=d_{1}\\
+ & \Leftrightarrow d_{2}=y \:;\: d=\frac{(d_{1}+d_{2})}{4}\\
+ &The \: constraint \qquad z>0 \: \Leftrightarrow \: d<y \: \Leftrightarrow \: d_{2}<3d_{1}
+\end{align*}
+
+\begin{align*}
+&loop \: on \: d_{1} \: and \:d_{2} \\
+& increment \: for \:d_{2} \: by \:4 \:due\:to\:d_{1}+d_{2}\equiv0 \: Mod[4]
+\end{align*}
+
+\begin{align*}
+  & n=d_{1} \times d_{2}\\
+ & d_{2}=y \:;\: d=\frac{(d_{1}+d_{2})}{4}\\
+ & d_{2}<3d_{1}
+\end{align*}
+
+\end{document}

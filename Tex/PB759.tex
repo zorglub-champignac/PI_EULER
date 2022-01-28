@@ -1,0 +1,24 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+	&\text{We must compute }S(n)=\sum_{i=0}^{i\leq n}b(i)^{2} \times i^{2}\text{ where b(i) is the number of bits set to 1 for i}\\
+	&\text {for }p=2^{k} > n \text { we have: }  \\
+	&S(n+2^{k})=\sum_{i=0}^{i\leq n+2^{k}}b(i)^{2}\times i^{2} 
+	=S(2^{k}-1)+\sum_{i=2^{k}}^{i\leq n+2^{k}}b(i)^{2}\times i^{2} \\
+	& =S(2^{k}-1)+\sum_{i=0}^{i\leq n}b(i+2^{k})^{2}(i+2^{k})^{2}=S(2^{k}-1)+\sum_{i=0}^{i\leq n}(b(i)+1)^{2}(i+p)^{2} \\
+	&=S(2^{k}-1)+\sum_{i=0}^{i\leq n}(b(i)^{2}+2b(i)+1)^{2}(i^{2}+2\ i\ p+p^{2})\\
+	&\text{ if we note by }S_{\alpha \beta}(n)=\sum_{i=0}^{i\leq n}b(i)^{\alpha}\times i^{\beta}\text { for }\alpha=\{1,2\},\beta=\{0,1,2\}\\
+	&S_{22}(n+2^{k})=S_{22}(2^{k}-1)+S_{22}(n)+2pS_{21}(n)+p^{2}S_{20}(n)
+	+2S_{12}(n)+4pS_{11}(n)+2p^{2}S_{10}(n)+\sum_{i=0}^{i\leq n}(i+p)^{2}\\
+	&S_{22}(n+2^{k})=S_{22}(2^{k}-1)+S_{22}(n)+2pS_{21}(n)+p^{2}S_{20}(n)
+	+2S_{12}(n)+4pS_{11}(n)+2p^{2}S_{10}(n)+\sum_{i=p}^{i\leq n+p}i^{2}\ (1)\\
+	&\text { we can apply (1) to compute in ascending order for k }S_{\alpha \beta}(2^{k}-1)\\
+	&\text {and next compute }S_{22}(N)\text{ by adding in ascending order the bits set to 1   in base 2 of N }\\
+	&\mathbf{\textbf {Remark: we compute }S_{\alpha \beta}\textbf{ only for }log_{2}(N)+b(N)\textbf { different values}}\\
+\end{align*}	
+\end{document}

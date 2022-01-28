@@ -1,0 +1,38 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+\begin{align*}
+&\text{ The 360-chandelier is equivalent to 12 independant 30-chandeliers. }\\
+&\text{ So we need only to compute }f(30,i)\text{ for }i=1,2,...,20\text{ and}\\
+&\text{ distribute the 20 candles between the 12 x 30-chandeliers } \\
+&\text{ The number of distributions is reduced as a balanced chandelier must contain 2 or more candles.}\\ 
+\end{align*}
+\begin{align*}
+	&\textit{to compute }f(30,i)\textit{ for }i=1,2,...,20 \text{ we use:}\\
+	&\textit{a) any balanced group is a combination of 2-group 3-group and 5-group}\\
+	&\textit{b) first we compute }g(30,i)\textit{ for }i=1,2,...,20 \textit{ without any anti-symetric candels (k,k+15) }\\
+	&\textit{c)  - any 3-group or 5-group is even or odd }\\
+	&\textit{    - the anti-symetric of any 3-group (resp. 5-group) is a 3-group (resp. 5-group) of opposite parity}\\
+	&\textit{    - any (3-group,5-group) of same parity contains a commun candle, so in a combination}\\
+	&\textit{      3-group and 5-group must have different parity}\\
+	&\textit{    - any (3-group,5-group) of different parity, contains an anti-symetric pair(2-group) which must be removed}\\
+	&\textit{- so }n_{3}\times \textit{3-g}+n_{5}\times \textit{ 5-g has }(3n_{3}+5n_{5}-2n_{3}\times n_{5}) \textit{ candles and }
+	{5 \choose n_{3}}\times {3 \choose n_{5}}\times 2^{\delta(n_{3},n_{5})}\textit{ occurences}\\
+	&\textit{ where }\delta(n_{3},n_{5})=1\textit{ if }n_{3}>0\textit{ and }n_{5}>0\ \,  \delta(n_{3},n_{5})=n_{3}+n_{5}\textit{ otherway.}\\
+	&\textit{d) exeption: }3+3+3+3+3\textit{ and }5+5+5\textit{ lead to the same candles in }g(30,15)  \\
+	&\textit{e) we add the 2-groups by: }f(30,i)=\sum_{j=0}^{2j\leq i}g(30,i-2j)\times { 15-(i-2j)\choose j}\\
+	&\textit{f) we need only to compute }f(30,i)\textit{ for }i \leq 15 \textit{ as by complementarity }f(30,30-i)=f(30,i)\\			
+\end{align*}
+\begin{align*}
+&\text{ A little faster solution is:  }\\
+&\text{ We only to compute }g(30,i)\text{ for }i=1,2,...,20\text{ and}\\
+&\text{ distribute the 20 candles using g(30,i) between the 12 x 30-chandeliers } \\
+&\text{ We add the 2-groups globally for the 12 chandeliers}\\
+&\text{ This version is faster as : }\\
+&- g(30,i)\text{ is different from 0 only for i=3,5,6,7,8,9,10,12,15 so the number of distribution is reduced}\\
+&\text{- as we add 2-groups globally we need to consider only distributions for even sums }\leq 20\\
+\end{align*}
+\end{document}

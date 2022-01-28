@@ -1,0 +1,53 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+	&\text{ if }x^{2}+5xy+3y^{2}=z^{2}\\
+	&\text{A) if y is even, it is easy to check that y is multiple of 4 and z is odd}\\ 
+	&\text{ so if }y=4y_{1},\ x^{2}+20xy_{1}+12y_{1}^{2}=(x+10y_{1})^{2} -52y_{1}^{2}=z^{2} \\
+	&\text {if }u=x+10y_{1}\text{ we have: }u^{2}-z^{2}=52y_{1}^{2}\\
+	&\Leftrightarrow \frac{u+z}{2}\times\frac{u-z}{2}=13y_{1}^{2} \\
+	&gcd(x,y)=1 \Rightarrow gcd(x,y_{1})=1 \Rightarrow gcd(u,z)=1 \Rightarrow gcd(\frac{u+z}{2},\frac{u-z}{2})=1 \\
+	&\text{so it exists m,n with gcd(m,n)=1, gcd(n,13)=1, mn even, }y_{1}=m\times n\text{ and}\\
+	&\{\frac{u+z}{2}=13m^{2}\ and \ \frac{u-z}{2}=n^{2}\}
+	\text{ or }\{\frac{u+z}{2}=n^{2}\ and \ \frac{u-z}{2}=13m^{2} \}\\
+	&\text{In the 2 cases: }z=\arrowvert n^{2}-13m^{2}\arrowvert \ ; \ y=4nm \ ; \ x=13m^{2}-10mn+n^{2}\\
+	& \\
+	&\text{B) if y is odd we have: }4x^{2}+20xy+12y^{2}=(2x+5y)^{2}-13y^{2}=4z^{2}\\
+	&\text {if }u=2x+5y\text{ we have: }u^{2}-4z^{2}=(u+2z)\times(u-2z)=13y^{2}\\
+	&gcd(x,y)=1\ and\ y\ odd \Rightarrow gcd(u,y)=1 \ and\ u\ odd \Rightarrow gcd(u+2z,u-2z)=1\\
+	&\text{so it exists m,n with gcd(m,n)=1, gcd(n,13)=1, mn odd, }y=m\times n\text{ and}\\
+	&\{{u+2z}=13m^{2}\ and \ {u-2z}=n^{2}\}
+	\text{ or }\{{u+2z}=n^{2}\ and \ {u-2z}=13m^{2} \}\\
+	&\text{In the 2 cases: }z=\arrowvert \frac{n^{2}-13m^{2}}{4}\arrowvert \ ; \ y=nm \ ; \ x=\frac {13m^{2}-10mn+n^{2}}{4}\\
+	& \\
+	&\text { for A) and B) }x>0 \Leftrightarrow \frac{n}{m} < \sqrt{5-2\sqrt{3}}\ or \ \frac{n}{m} > \sqrt{5+2\sqrt{3}} \\	
+\end{align*}
+\begin{align*}
+	&\text{ In summary the solutions are:} \\
+	&\text{ m,n integer gcd(m,n)=1, gcd(n,13)=1, } \frac{n}{m} < \sqrt{5-2\sqrt{3}}\ or \ \frac{n}{m} > \sqrt{5+2\sqrt{3}}\\
+	&\text{ - if mn odd, } z=\arrowvert \frac{n^{2}-13m^{2}}{4}\arrowvert \leq N\\
+	&\text{ - if mn even, } z=\arrowvert {n^{2}-13m^{2}} \arrowvert \leq N\\
+	& \\
+	&\text{ Let D(N) the number of solutions with }gcd(m,n) > 2\text{ we have:} \\
+	& C(N) = D(N) - \sum_{p\ prime}^{p\neq 2,13}D(\frac{N}{p^{2}})+ \sum_{p_{1},p_{2}\ prime}^{p_{i}\neq 2,13}D(\frac{N}{p_{1}^{2}p_{2}^{2}}) - \sum_{p_{1},p_{2},p_{3}\ prime}^{p_{i}\neq 2,13}D(\frac{N}{p_{1}^{2}p_{2}^{2}p_{3}^{2}})+\ .\ .\ . \\
+	&\text{ let }C_{13}(N)\textit{ resp. }D_{13}(N)\text{ the functions without the condition gcd(n,13)=1}\\
+	&\text{ we have the same relation between }C_{13}(N)\ and\ D_{13}(N)\\
+	&\text{ and as if } n=13n_{1},\ \arrowvert 13m^2-n^{2}\arrowvert =13\arrowvert m^2-13n_{1}^{2}\arrowvert \Rightarrow C(N)=C_{13}(N)-C_{13}(N/13)\\
+\end{align*}
+\begin{align*}
+	&&A_{e}=\frac{1}{2}( \sqrt{\frac{N}{5\sqrt{3}-6}}
+       ,\sqrt{\frac{13\times N}{5\sqrt{3}+6}})\ 
+       A_{o}=( \sqrt{\frac{N}{5\sqrt{3}-6}}
+       ,\sqrt{\frac{13\times N}{5\sqrt{3}+6}}) \\
+    && \\
+    &&B_{e}=\frac{1}{2}( \sqrt{\frac{N}{5\sqrt{3}+6}}
+       ,\sqrt{\frac{13\times N}{5\sqrt{3}-6}})\ 
+       B_{o}=( \sqrt{\frac{N}{5\sqrt{3}+6}}
+       ,\sqrt{\frac{13\times N}{5\sqrt{3}-6}}) \\     
+\end{align*}
+\end{document}

@@ -1,0 +1,26 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+	&\text{Let }g=GCD(n,k)\text{ so }n=n_{1}\times g\text{ ; }k= k_{1}\times g\text{ ; }(n_{1},k_{1})\text{ coprime}\\
+	&X_{0}=x(0)\wedge x(g)\wedge x(2g)\wedge ...\wedge x((n_{1}-1)g)  \\
+	&X_{1}=x(1)\wedge x(g+1)\wedge x(2g+1)\wedge ...\wedge x((n_{1}-1)g+1) \\
+	&\text{  ... }\\
+	&X_{g-1}=x(g-1)\wedge x(2g-1)\wedge x(3g-1)\wedge ...\wedge x(n_{1}g-1)\\  
+\end{align*}	
+
+	$$ \text{ As: }k=k_{1} \times g\text{ turning k consecutive }x(j)\text{ changes exactly }k_{1}\text{bits in each }X_{i} $$
+\begin{align*}	
+	S(N)&=\sum_{n_{1}=1}^{n_{1}=N}\sum_{g=1}^{g\times n_{1}\leq N}\sum_{\stackrel{k_{1}=1,}{gcd(k_{1},n_{1})=1}}^{k_{1}\leq n_{1}}2^{n_{1}g-g+1+IsOdd(k_{1})}\\
+	&=\sum_{n_{1}=1}^{n_{1}=N}\sum_{g=1}^{g\times n_{1}\leq N}2^{n_{1}g-g}\sum_{\stackrel{k_{1}=1,}{gcd(k_{1},n_{1})=1}}^{k_{1}\leq n_{1}}2^{1+IsOdd(k_{1})}\\
+	&=\sum_{n_{1}=1}^{n_{1}=N}\sum_{g=1}^{g\times n_{1}\leq N}2^{(n_{1}-1)^{g}}\sum_{\stackrel{k_{1}=1,}{gcd(k_{1},n_{1})=1}}^{k_{1}\leq n_{1}}2^{1+IsOdd(k_{1})}\\
+	&=\sum_{n_{1}=1}^{n_{1}=N}\sum_{g=1}^{g\times n_{1}\leq N}2^{(n_{1}-1)^{g}} \times \begin{cases}2\varphi(n_{1})&\ n_{1} \text{ even}\\ \varphi(n_{1})+\varphi(n_{1})/2 &\ n_{1} \text{ odd}\end{cases}\\
+	&=\sum_{n_{1}=1}^{n_{1}=N}2^{n_{1}-1}[1+2^{n_{1}-1}+(2^{n_{1}-1})^2+...+(2^{n_{1}-1})^{gmax}]\times \begin{cases}2\varphi(n_{1})&\ n_{1} \text{ even}\\ \varphi(n_{1})+\varphi(n_{1})/2 &\ n_{1} \text{ odd}\end{cases}\\
+	&\text{as if }n_{1} \text{ even then } k_{1} \text{ odd, so } \varphi(n_{1})=\text{number of }k_{1}\ gcd(k_{1},n_{1})=1\\
+	&\text{and if }n_{1} \text{ odd then } gcd(k_{1},n_{1})=1\Leftrightarrow gcd(n_{1}-k_{1},n_{1})=1 \text{ and }k_{1},n_{1}-k_{1}\text {have different parity} \\	
+\end{align*}	
+\end{document}

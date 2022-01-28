@@ -1,0 +1,62 @@
+\documentclass[10pt,a4paper]{letter}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}	
+	&\text{Let the convergents  } \textit{R}_{n} \text{ of } x=\sqrt{N} \text{ for } n=1,2,...\\
+  & \textit{R}_{n} =\frac{p_{n}}{q_{n}} = \frac{p_{n-1}a_{n}+p_{n-2}}{q_{n-1}a_{n}+q_{n-2}} \\
+  &\sqrt{N}=x=\frac{p_{n-1}x_{n}+p_{n-2}}{q_{n-1}x_{n}+q_{n-2}}\\
+	& \text{Where :}\\
+	& x=[a_{0};a_{1},a_{2},a_{3},...]=\underset{n\rightarrow\infty}{lim}  {R}_{n}\\
+	& x_{n}=[a_{n};a_{n+1},a_{n+2},a_{n+3},...]\\
+	& \text{We have the relations :}\\
+	&  p_{n}q_{n-1}-p_{n-1}q_{n}=(-1)^{n+1} \text{ (1) } \\
+	& \left| x-\frac{p_{n}}{q_{n}} \right| = \left| \frac{(-1)^{n+1}}{q_{n}(q_{n}x_{n+1}+q_{n-1})}  \right| 
+	=\frac{1}{q_{n}(q_{n}x_{n+1}+q_{n-1})} \text{ (2) } \\				
+\end{align*}
+
+
+\begin{align*}
+& \text{Let the semi-convergents for } k=1,2,...,a_{n+1}-1\\
+& s_{k}=\frac{p_{n}k+p_{n-1}}{q_{n}k+q_{n-1}}\\
+& \text{We have :}\\ 
+& \left| x-s_{k}\right|=\left|\frac{p_{n-1}x_{n}+p_{n-2}}{q_{n-1}x_{n}+q_{n-2}}
+ - \frac{p_{n}k+p_{n-1}}{q_{n}k+q_{n-1}} \right|\\
+&=\left|\frac{(x_{n+1}-k)(p_{n}q_{n-1}-p_{n-1}q_{n})}{(q_{n-1}x_{n}+q_{n-2})(q_{n}k+q_{n-1})}\right|\\
+&=\frac{(x_{n+1}-k)}{(q_{n-1}x_{n}+q_{n-2})(q_{n}k+q_{n-1})} \text{ (3)  ;} \textit {  by using (1)}\\
+& \textit{Remark : } s_{a_{n+1}}=R_{n+1}
+\end{align*}
+
+\begin{align*}
+& \text {By (3) }\left| x-s_{k}\right| \text{ decrease  as k increase}\\
+& \text{so we must choose the biggest value for k : } K=\frac{10^{12}-q_{n-1}}{q_{n}}\\
+&  \text {By (2)(3) } \left| x-s_{K}\right| < \left| x-\frac{p_{n}}{q_{n}} \right| \Leftrightarrow \frac{(x_{n+1}-K)}{(q_{n}K+q_{n-1})} < \frac{1}{q_{n}}\\
+& \Leftrightarrow x_{n+1}-2\  K < \frac{q_{n-1}}{q_{n}}\text { (4)}\\
+& \text{as } \lfloor x_{n+1} \rfloor = a_{n+1} \text{ and } \frac{q_{n-1}}{q_{n}}<1 \text{ we have }\\
+& \text {- for } 2\ k < a_{n+1}\ :\  \frac{p_{n}}{q_{n}} \text{ better than } s_{K} \\
+&\text {- for } 2\ k > a_{n+1}\ :\  s_{K} \text{ better than }\frac{p_{n}}{q_{n}}  \\
+\end{align*}
+
+	
+
+\begin{align*}
+& \text{ For }a_{n+1}==2\ K \text{ two solutions: } \\
+& \text {Solution 1 : direct comparison between } \frac{p_{n}}{q_{n}} \text{ and } s_{K}\\
+& \text {a) If }\frac{p_{n}}{q_{n}} , s_{K} \text { are on the same side of }x=\sqrt{N} \ ,\  s_{K} \text{ is better }\Leftrightarrow\\
+& s_{K}-\frac{p_{n}}{q_{n}} \text{ and } \sqrt{N}-s_{K} \text{ have the same sign }
+\\
+& \textit{ for example if } \frac{p_{n}}{q_{n}}<\sqrt{N} \textit { and } s_{K}<\sqrt{N}\ ,\ s_{K} \textit { is better if }s_{K}>\frac{p_{n}}{q_{n}}\\
+&\text {b) If }\frac{p_{n}}{q_{n}}  \text { are on opposite side of }x=\sqrt{N} \\
+& \text{ we choose by comparison between }\frac{(\frac{p_{n}}{q_{n}}+s_{K} )}{2} \text { and }\sqrt{N} \\
+&\text { The comparison is done by evaluation of }num^{2}-N\times den^{2}\\
+& \text{ the only part of code which needs more than 64 bits precision}
+\\
+& \text {Solution 2 : }x_{n+1}-2\  K=x_{n+1}-a_{n+1}=\frac{1}{x_{n+2}}\\
+&\text{Using (4) : computation of }x_{n+2} \text{ and comparison to }\frac{q_{n}}{q_{n-1}}\\
+&\text{Comparison to }\frac{q_{n}}{q_{n-1}} \text{ using the alternate convergence of }x_{n+2}=[a_{n+2};a_{n+3},a_{n+4},a_{n+4},...]
+\end{align*}  
+
+\end{document}
