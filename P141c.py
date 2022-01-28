@@ -115,27 +115,38 @@ def pgcd(a, b):
 
 
 def CFSQ(N):
-    FC_N0=0 ;  FC_D0=1
-    FC_N1=1 ;  FC_D1=0
     k0 = int(sqrt(N))
-    a = n = k0
-#    nb = 1
-    d = 1
-    tmp = FC_N0 ; FC_N0 = FC_N1 ; FC_N1 = a * FC_N0 + tmp
-    tmp = FC_D0 ; FC_D0 = FC_D1 ; FC_D1 = a * FC_D0 + tmp
-    if N == k0 * k0:
-        d = 0
+    d = N - k0*k0
+    if d < 0:
+        k0 -= 1
+        d += 2*k0+1
     if d == 0:
-        yield (k0,0)
-    else:
-        while 1:
-            d = (N - n * n) // d
-            n = k0 - ( ( k0 + n) % d)
-            a = (k0 + n) // d
-            tmp = FC_N0 ; FC_N0 = FC_N1 ; FC_N1 = a * FC_N0 + tmp
-            tmp = FC_D0 ; FC_D0 = FC_D1 ; FC_D1 = a * FC_D0 + tmp
-#           nb += 1
-            yield (FC_N1,FC_D1)
+        yield (0,k0)
+        return
+    n = k0
+    nb = 1
+    a = (2*k0) // d
+    FC_D0 = 1
+    FC_D1 = a
+    FC_N0 = k0
+    FC_N1 = a * k0 + 1
+    n = a * d - n
+    D1_2 =  FC_D1 * FC_D1
+    d = FC_N1*FC_N1 - N * D1_2
+    yield (d,D1_2)
+    while 1:
+        nb += 1
+        a = (k0 + n) // d
+        FC_N1, FC_N0 = a * FC_N1 + FC_N0, FC_N1
+        FC_D1, FC_D0 = a * FC_D1 + FC_D0, FC_D1
+        n = a * d - n
+        D1_2 = FC_D1 * FC_D1
+#        d = (N - n * n) // d
+        if nb & 1:
+            d = FC_N1 * FC_N1 - N * D1_2
+        else:
+            d = -FC_N1 * FC_N1 + N * D1_2
+        yield (d,D1_2)
 
 
 
@@ -184,41 +195,36 @@ def main():
 #        print(a,"/",b,"x",k,"  ",n,"             ",sep='')
         Sum += n
 
-    for b0 in squareFree:
-        maxA3 = paramMaxN // (b0 * b0 * b0)
-        pgcdB0 = computePgcd(b0)
-        a = b0+1
+    for bf in squareFree:
+        maxA3 = paramMaxN // (bf * bf * bf)
+        pgcdBF = computePgcd(bf)
+        a = bf+1
         a3 = a * a * a
-        aModb0 = 0
+        aModbf = 0
         while a3 <= maxA3:
-            aModb0 += 1
-            if aModb0 == b0:
-                aModb0 = 0
-            if pgcdB0[aModb0] == 1:
-                maxD  = paramMaxN // (a3 * b0 * b0 * b0)
-                cfsq = CFSQ(a3*b0)
-                (N1,D1) = next(cfsq)
-                if D1 != 0:
-                    while 1:
-                        k0 = D1*D1
-                        if k0 * k0 > maxD:
-                            break
-                        delta = N1 * N1 - a3 * b0 * k0
-                        bbs = pgcdB0[delta % b0]
-                        if b0 * delta < a * bbs:
-                            bf = getSF(delta)
-                            if bf == 0:
+            aModbf += 1
+            if aModbf == bf:
+                aModbf = 0
+            if pgcdBF[aModbf] == 1:
+                maxD  = paramMaxN // (a3 * bf * bf * bf)
+                cfsq = CFSQ(a3*bf)
+                (delta,k0) = next(cfsq)
+                if delta != 0:
+                    while k0 * k0 <= maxD:
+                        if delta < a:
+                            bbs = pgcdBF[delta % bf]
+                            if bbs > 1:
+                                delta //= bbs
+                            df = getSF(delta)
+                            if df == 0:
                                 print("FATAL ERROR get square free of",delta)
-                                bf = getSF(delta)
                                 exit(0)
-                            b1 = b0 // bbs
-                            b = b1 * (delta // bbs) * bf
+                            bs2 = df * delta
+                            b = bs2 * bf
                             if b < a:
-                                k = k0 * b1 * b1 * bf
-                                if k * b * ( k * a3+b) > paramMaxN:
-                                    break
+                                k = k0 * (bf // bbs) * df * bf
                                 n = k * b * (k * a3 + b)
-                                if pgcd(a, b) == 1:
+                                if n < paramMaxN and pgcd(a, b) == 1:
                                     AddSol141(n, a, b, k)
                                     ksMax = paramMaxN // n
                                     ks = 2; ks2 = ks*ks
@@ -227,11 +233,10 @@ def main():
                                             AddSol141( ks2 * ks2 * ks2 * n, a, ks2 * b, ks2 * k)
                                         ks += 1
                                         ks2 = ks * ks
-                        (N1, D1) = next(cfsq)
-                        k0 = D1 * D1
+                        (delta, k0) = next(cfsq)
                         if k0 * k0 > maxD:
                             break
-                        (N1, D1) = next(cfsq)
+                        (delta, k0) = next(cfsq)
             a += 1
             a3=a*a*a
     Sol.sort(key=lambda sol: (sol[0],sol[1]))

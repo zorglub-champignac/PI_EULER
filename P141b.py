@@ -6,8 +6,6 @@ import sys
 import time
 
 
-#PB141_MAX = 10000000000000000000
-
 small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,101]
 def freeSqare(maxSF):
     global small_primes
@@ -116,9 +114,12 @@ def main():
                                 Sum += n
                             bs = 2
                             b = bs * bs * b0
-                            while b < a and bs*sq_ka <= sqMax:
+                            while b < a:
+                                sq_bka = bs * sq_ka
+                                if sq_bka > sqMax:
+                                    break
                                 n = k * b * (k * a3 + b)
-                                if TestSol(bs * sq_ka , n, a, b):
+                                if TestSol(sq_bka , n, a, b):
                                     Sum += n
                                 bs += 1
                                 b = bs * bs * b0
