@@ -1,6 +1,7 @@
 from itertools import *
-from math import sqrt
-from fractions import gcd
+from math import sqrt,gcd
+# from fractions import gcd
+
 import sys
 import time
 
@@ -79,14 +80,14 @@ def gen_progressive_perfect_squares(N):
         for p in takewhile(lambda p: f(t, p, p * t + 1) < N, count(1)):
             for m, u in g(1, p * t ** 3, p * p * t ** 3, p * t + 1, N):
                 if t * p < u:
-                    print      t, p, m, u, m * m , "->" , p*p*t*t*t , p*u*t*t, u*u*t
+                    print(t, p, m, u, m * m , "->" , p*p*t*t*t , p*u*t*t, u*u*t)
                     yield m * m
 
 expMaxn=12
 if len(sys.argv) > 1:
     expMaxn = int(sys.argv[1])
 
-t0 = time.clock()
+t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
 N = 10 ** expMaxn
-print sum(set(gen_progressive_perfect_squares(N)))
-print time.clock() - t0
+print(sum(set(gen_progressive_perfect_squares(N))))
+print(time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0)

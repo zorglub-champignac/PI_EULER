@@ -1,4 +1,4 @@
-from time import clock
+import time
 import sys
 
 nl=123456789
@@ -25,13 +25,14 @@ def p702():
         return (m - 1) * (m - 2) - f(x, m)
 
     def main(N):  # assume N is odd
-        clock()
         D = N.bit_length()
         return N * (3 * N + 1) // 2 * (D + 1) - sum(g(N, 2 ** d) for d in range(2, D + 1)) + 2 * g(N, 2 ** D - N)
 
-    print(main(nl))
-    clk = clock();
-    print(" {:.3f}s ".format(clk))
+    t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    res=main(nl)
+    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    print(res)
+    print(" {:.3f}ms ".format(clk))
  #   print(f_cache)
 
 

@@ -1,6 +1,6 @@
 from __future__ import print_function
 import sys
-from time import clock
+import time
 
 '''
 '''
@@ -34,7 +34,7 @@ if len(sys.argv) > 1:
 
 def main():
     global nl
-    clock()
+    t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
     exp2Max = 0
     while (1 << exp2Max) < nl:
         exp2Max += 1
@@ -51,8 +51,8 @@ def main():
     nbInv = F702(nl % pow2, pow2)
     sum2B1W -=2 * ( (pow2-1) * (pow2-2)  - nbInv )
 
-    clk = clock();
-    print("{:.3f}s ".format(clk), end='')
+    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    print("{:.3f}ms ".format(clk), end='')
     print("SUM=",nl*(3*nl+1)/2*(exp2Max+1) - sum2B1W )
 
 main()

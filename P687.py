@@ -1,8 +1,8 @@
 from __future__ import print_function
-from math import sqrt,floor
-from fractions import gcd
+from math import sqrt,floor,gcd
+# from fractions import gcd
 import sys
-from time import clock
+import time
 
 '''
 static int Index5(int S,int i0,int i1,int i2,int i3) {
@@ -57,7 +57,7 @@ MaxNr=13
 
 def main():
     global MaxNr
-    clock()
+    t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
     ant5 = [0]*5
     ant5[Index5(1, 0, 0, 0, 0)] = 1
     ant5[Index5(1, 1, 0, 0, 0)] = 0
@@ -183,7 +183,7 @@ def main():
         ant5 = cur5
         cur5 = []
 
-    clk = clock();
-    print("{:.3f}s ".format(clk), end='')
+    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    print("{:.3f}ms ".format(clk), end='')
 
 main()
