@@ -2,7 +2,7 @@
 from __future__ import print_function
 from math import sqrt,floor
 import sys
-from time import clock
+import time
 
 MAXR=105
 
@@ -63,7 +63,7 @@ def main():
     global FR_1n,FR_1d,FR_0n,FR_0d
     N= [0] * MAXR
     R2 = MAXR*MAXR
-    clock()
+    t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
     S1 = 0 ; S2 = 0 ;   S3 = 0
     FR_init(MAXR-1, 0, 1, 1, 1)
     # stern-brocot
@@ -83,8 +83,8 @@ def main():
     S1 *= 2 ; S2 = 2 * S2 ; S3 = 2 * S3
     S = S1*S1*S1 - 3 * S2 * S1 + 2 * S3
     S //= 3
-    clk = clock();
-    print("{:.3f}s ".format(clk), end='')
+    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    print("{:.3f}ms ".format(clk), end='')
     print("r=",MAXR,"S=",S,"S1=",S1,"S2=",S2,"S3=",S3)
 
 main()
