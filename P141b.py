@@ -1,7 +1,6 @@
 from __future__ import print_function
-from math import sqrt
-from fractions import gcd
-from time import clock
+from math import sqrt,gcd
+import time
 import sys
 import time
 
@@ -44,8 +43,8 @@ def pgcd(a, b):
 def TestSol(sqa,n,a,b ):
     m = int(sqa)+1
     if n == m*m and pgcd(a,b) ==1:
-        clk = clock();
-        print("{:.3f}s ".format(clk), end='')
+        # clk = clock();
+        # print("{:.3f}s ".format(clk), end='')
         print(n,a,b)
         return True
     else:
@@ -60,6 +59,7 @@ if len(sys.argv) > 1:
 
 
 def main():
+    t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
     paramMaxN = int(10 ** expMaxn)
     sfl = freeSqare(5000)
     SFL=[]
@@ -130,6 +130,8 @@ def main():
                 break
         a += 1
         a3 = a * a * a
+    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    print("{:.3f}ms ".format(clk), end='')
     print("Sum=",Sum,"for n<2**",expMaxn)
 
 main()

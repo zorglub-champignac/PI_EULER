@@ -1,6 +1,6 @@
 from __future__ import print_function
 from math import sqrt , trunc
-from time import clock
+import time
 from decimal import *
 import sys
 import time
@@ -24,14 +24,14 @@ def divisorFreeSq(sf):
     d=1
     while d*d<=sf:
         if sf % d ==0:
-            d2 = sf / d
+            d2 = sf // d
             lstd2.append(d2)
             yield (d2,d2*d*d)
         d += 1
     if sf > 1:
         lstd2.reverse()
         for d in lstd2:
-            d2 = sf /d
+            d2 = sf // d
             yield (d2, d2 * d * d)
 
 def pgcd(a, b):
@@ -39,21 +39,20 @@ def pgcd(a, b):
         a, b = b, a % b
     return a
 
-
 def TestSol(sqa,n,a,b ):
     m = int(sqa)+1
     if n == m*m and pgcd(a,b) ==1:
-        clk = clock();
-        print("{:.3f}s ".format(clk), end='')
         print(n,a,b)
         return True
     else:
         return False
-
+t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
 def AddSol(n,a,b,k):
-        clk = clock();
-        print("{:.3f}s ".format(clk),a,"/",b,"x",k,sep='',end='')
-        print("\t",n)
+    global t0
+    t1=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    clk = (t1 - t0) / 1000000
+    print("{:.3f}ms ".format(clk), end='')
+    print("\t",n)
 
 
 

@@ -1,6 +1,7 @@
 from __future__ import print_function
 from math import sqrt
 import sys
+import time
 
 
 # simple sieve
@@ -183,6 +184,7 @@ def main():
     paramSFpivot=2000
     paramMaxN = int(10 ** expMaxn)
     maxB0 = int(pow(paramMaxN, 1 / 6.0))
+    t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
 #    paramMAXSF = 64000000
     initSF(paramSFpivot,maxB0*maxB0)
     squareFree=GetSquareFree(maxB0)
@@ -241,8 +243,9 @@ def main():
             a3=a*a*a
     Sol.sort(key=lambda sol: (sol[0],sol[1]))
     print("\n")
+    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
     for (n,a,b,k) in Sol:
         print(a,"/",b,"x",k,"\t",n,sep='')
-
+    print("{:.3f}ms ".format(clk), end='')
     print("For n<10**",expMaxn," Sum =",Sum)
 main()

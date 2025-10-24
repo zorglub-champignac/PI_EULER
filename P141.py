@@ -10,7 +10,7 @@ def div_pow(n, d):
     e = 0
     while n % d == 0:
         e += 1
-        n /= d
+        n //= d
     return e, n
 
 
@@ -32,7 +32,7 @@ def divide_square_and_not(n, p0=2):
             if n % p == 0:
                 e, m = div_pow(n, p)
                 s, t = divide_square_and_not(m, p + 1)
-                return p ** (e / 2) * s, p ** (e % 2) * t
+                return p ** (e // 2) * s, p ** (e % 2) * t
         else:
             return 1, n
 
@@ -57,7 +57,7 @@ def g(a, b, c, U, M):
     d1 = gcd(a, b)
     d = gcd(d1, c)
     if d > 1:
-        return g(a / d, b / d, c / d, U, M)
+        return g(a // d, b // d, c // d, U, M)
 
     if d1 > 1:
         return ()
@@ -65,11 +65,11 @@ def g(a, b, c, U, M):
     d2 = gcd2(a, c)
     if d2 > 1:
         return ((m, u * d2) for m, u in
-                g(a / d2, b * d2 * d2, c / d2, U / d2, M))
+                g(a // d2, b * d2 * d2, c // d2, U // d2, M))
 
     d3 = gcd2(b, c)
     if d3 > 1:
-        return ((m * d3, u) for m, u in g(a * d3, b / d3, c / d3, U, M / d3 ** 2))
+        return ((m * d3, u) for m, u in g(a * d3, b // d3, c // d3, U, M // (d3 * d3)))
 
     return g2(a, b, c, U, M)
 
@@ -90,4 +90,5 @@ if len(sys.argv) > 1:
 t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
 N = 10 ** expMaxn
 print(sum(set(gen_progressive_perfect_squares(N))))
-print(time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0)
+clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+print("{:.3f}ms ".format(clk), end='')
