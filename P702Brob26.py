@@ -28,9 +28,9 @@ def p702():
         D = N.bit_length()
         return N * (3 * N + 1) // 2 * (D + 1) - sum(g(N, 2 ** d) for d in range(2, D + 1)) + 2 * g(N, 2 ** D - N)
 
-    t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    t0 = time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     res=main(nl)
-    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000
     print(res)
     print(" {:.3f}ms ".format(clk))
  #   print(f_cache)

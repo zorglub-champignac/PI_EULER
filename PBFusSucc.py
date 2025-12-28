@@ -22,7 +22,8 @@ def r2x(numr,powr,numx,powx):
 
 SUCC = {}
 def Succ(numr,powr,level):
-    if level > 200:
+#    if level > 200:
+    if level > 10:
         print("Succ(%x/2^%d)=exit" % (numr, powr))
         exit(0)
     if numr < 0:
@@ -73,7 +74,8 @@ def Succ(numr,powr,level):
             numy >>= 1
             powy -= 1
 
-    if level < 100:
+#    if level < 100:
+    if level < 5:
         for i in range(0, level):
             print(".", end='', sep='')
         if powr <= powm:
@@ -89,7 +91,7 @@ def Succ(numr,powr,level):
     SUCC[(numr,powr)]=(numm,powm)
     return (numm,powm,level)
 
-n=3
+n=2
 if len(sys.argv) > 1:
     n = int(sys.argv[1])
 

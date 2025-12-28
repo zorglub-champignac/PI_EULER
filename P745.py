@@ -2,6 +2,7 @@ from __future__ import print_function
 from math import sqrt
 # from primesieve import *
 import sys
+import time
 
 # simple sieve
 # no need many primes
@@ -69,6 +70,10 @@ def main():
     print("For N=", Maxn, " Sum =", S)
 
 
+t0 = time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
 main()
+clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000000
+print("{:.3f}s ".format(clk), end='')
+
 
 

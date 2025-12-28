@@ -1,11 +1,10 @@
-
 from __future__ import print_function
 from math import sqrt,floor
 import sys
 import time
 
-MAXR=105
-
+n=8
+"""
 def isqrt(n):
     y = int(sqrt(n))
     if y < 50000000:
@@ -56,35 +55,19 @@ def FR_getNext():
         return 0
     return 1
 
-
+"""
+T3=[]
+T2=[]
 
 def main():
-    global nh,nl,nbPrimeL,nbPrimeH,nbPointsH,MAXR
-    global FR_1n,FR_1d,FR_0n,FR_0d
-    N= [0] * MAXR
-    R2 = MAXR*MAXR
-    t0=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
-    S1 = 0 ; S2 = 0 ;   S3 = 0
-    FR_init(MAXR-1, 0, 1, 1, 1)
-    # stern-brocot
-    while 1:
-        norm = FR_1n * FR_1n + FR_1d * FR_1d
-        if norm < R2:
-            ic = isqrt((R2-1)// norm)
-            N[ic] += 2
-        if FR_getNext() == 0:
-            break
-    N[MAXR-1] = 1
-    N[int(MAXR/sqrt(2))] += 1
-    for i in range(1, MAXR):
-        S1 += i * N[i];  S2 += i * N[i] * i;  S3 += i * N[i] * i * i
-    # print("R2=",R2,"nl=",nl,"nh=",nh)
-    # quarter disk to half disk
-    S1 *= 2 ; S2 = 2 * S2 ; S3 = 2 * S3
-    S = S1*S1*S1 - 3 * S2 * S1 + 2 * S3
-    S //= 3
+    global n,T3,T2
+    t0 = time.clock_gettime(time.CLOCK_HIGHRES)
+    for i1 in range(n):
+        for i2 in range(n):
+            if i2 != i1:
+                T2.append(tuple[i1,i2])
     clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000
     print("{:.3f}ms ".format(clk), end='')
-    print("r=",MAXR,"S=",S,"S1=",S1,"S2=",S2,"S3=",S3)
+    print("T2=",T2)
 
 main()

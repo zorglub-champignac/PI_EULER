@@ -2,6 +2,7 @@ from __future__ import print_function
 from math import sqrt
 # from primesieve import *
 import sys
+import time
 
 Maxn=100000000000000
 if len(sys.argv) > 1:
@@ -27,7 +28,9 @@ def main():
             j += 1
         F[i] = Sf
     print("For N=", Maxn, " Sum =", F[1])
-
-
+t0 = time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
 main()
+clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000000
+print("{:.3f}s ".format(clk), end='')
+
 

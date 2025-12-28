@@ -1,3 +1,4 @@
+# search fusible numbers.
 from __future__ import print_function
 import sys
 if sys.version_info >= (3,0):
@@ -69,6 +70,6 @@ def FusT(numr,powr,level):
     TAMESUCC[(numr, powr)] = (numa, powa)
     return (numa, powa, level)
 
-
-FusT(0x7fefffffd,34,0)
-FusT(3,0,0)
+FusT(2,0,0)
+# FusT(0x7fefffffd,34,0)
+# FusT(3,0,0)

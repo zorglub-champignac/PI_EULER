@@ -1,7 +1,7 @@
 from math import sqrt
 import sys
 import numpy as np
-from time import clock
+import time
 
 # from time import process_time
 
@@ -49,7 +49,7 @@ def A0(L):
     ans = 0
     for y in range(1, l + 1):
         ans += a(L, y)
-    return ans
+    return int(ans)
 
 #@nb.njit
 def B0(L):
@@ -61,6 +61,7 @@ def B0(L):
 
 #@nb.njit
 def main(L):
+    t0=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     v2 = int(sqrt(L / 2))
     v3 = int(sqrt(L / 3))
     isprime = np.ones(v2 + 1, dtype=np.bool_)
@@ -74,20 +75,26 @@ def main(L):
         isprime[p2::p] = 0
         mu[p::p2] = -mu[p::p2]
         mu[q::q] = 0
-    print("Sieved")
-    ansA = 0
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)-t0)/1000000000
+    print("{:.3f}s Sieved".format(clk))
+    ansA = int(0)
     for d in range(1, v3 + 1, 2):
         if mu[d]:
-            ansA += mu[d] * A0(L // d // d)
+#            a0 = A0(L // d // d) * int(mu[d])
+            a0 = A0(L // (d * d))
+            ansA +=  a0  * int(mu[d])
             if d< 20 or d > v3-20:
-                print(d,"->",mu[d],"x",A0(L // d // d))
+                print(d,"->",mu[d],"x",a0)
     ansB = 0
     for d in range(1, v2 + 1, 2):
         if mu[d]:
-            ansB += mu[d] * B0(L // d // d)
+            ansB += int(mu[d]) * B0(L // (d * d))
     ans = ansA + ansB + L
     print("For N=",L," Sum=",ans," =",ansA," + ",ansB)
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)-t0)/1000000000
+    print("{:.3f}s ".format(clk))
     return ans
+
 
 L=1000000000000
 if len(sys.argv) > 1:

@@ -132,6 +132,6 @@ if len(sys.argv) > 1:
     n = int(sys.argv[1])
 
 
-# MeekSucc(3,2,0)
+MeekSucc(3,2,0)
 MeekSucc(0x7fefffffd,34,0)
 MeekSucc(n,0,0)

@@ -8,7 +8,7 @@ if len(sys.argv) > 1:
     ndigits = int(sys.argv[1])
 
 def main():
-    t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    t0=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     clk = 0
 
     n00 = 0; n01 = 0; n02 = 0; n03 = 0; n04 = 0; n05 = 0; n06 = 0; n07 = 0; n08 = 0; n09 = 0
@@ -109,7 +109,7 @@ def main():
     + n70 + n71 + n72 \
     + n80 + n81 \
     + n90
-    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC)-t0)/1000000000;
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)-t0)/1000000000;
     print("{:.6f}s ".format(clk), end='')
     print(" S=", S)
 

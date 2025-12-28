@@ -72,7 +72,7 @@ if len(sys.argv) > 1:
 
 def main():
     global CircleLow ,CircleHigh , PrimeLow , PrimeHigh , maxn
-    t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    t0=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     clk = 0
     N=maxn
     n1=int(sqrt(N))
@@ -84,7 +84,7 @@ def main():
     for i in range(1,N // n1 ):
         S += 2 * (PrimeLow[i] - PrimeLow[i - 1]) * SigmaInvInt(N // i)
 
-    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC)-t0)/1000000000
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)-t0)/1000000000
     print("{:.3f}s ".format(clk), end='')
     print(" S=",S)
 

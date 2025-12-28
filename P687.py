@@ -57,7 +57,7 @@ MaxNr=13
 
 def main():
     global MaxNr
-    t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    t0=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     ant5 = [0]*5
     ant5[Index5(1, 0, 0, 0, 0)] = 1
     ant5[Index5(1, 1, 0, 0, 0)] = 0
@@ -183,7 +183,7 @@ def main():
         ant5 = cur5
         cur5 = []
 
-    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000
     print("{:.3f}ms ".format(clk), end='')
 
 main()

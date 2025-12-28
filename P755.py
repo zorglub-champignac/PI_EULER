@@ -1,5 +1,5 @@
 from __future__ import print_function
-from time import clock
+import time
 import sys
 
 Pow10=13
@@ -17,7 +17,7 @@ for i in range(0,Pow10):
 # and if n=V[i] V[iL] = VL
 def main():
     global  Maxn,Pow10
-    clock()
+    t0 = time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     N=Maxn
     F = [1, 2]
     nbF = 1
@@ -76,8 +76,8 @@ def main():
         elif VR == 0:
             S -= 1
         vS[i] = S
-    clk = clock()
-    print("{:.3f}s ".format(clk), end='')
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000
+    print("{:.3f}ms ".format(clk), end='')
     print("For N=10**",Pow10,"; NB Fibonnaci=",len(F)," ; number of Computed values=",nbV,"; S=",vS[0])
 
 main()

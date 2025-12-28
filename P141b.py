@@ -59,7 +59,7 @@ if len(sys.argv) > 1:
 
 
 def main():
-    t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    t0 = time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     paramMaxN = int(10 ** expMaxn)
     sfl = freeSqare(5000)
     SFL=[]
@@ -130,7 +130,7 @@ def main():
                 break
         a += 1
         a3 = a * a * a
-    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000
     print("{:.3f}ms ".format(clk), end='')
     print("Sum=",Sum,"for n<2**",expMaxn)
 

@@ -87,8 +87,8 @@ expMaxn=12
 if len(sys.argv) > 1:
     expMaxn = int(sys.argv[1])
 
-t0 = time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+t0 = time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
 N = 10 ** expMaxn
 print(sum(set(gen_progressive_perfect_squares(N))))
-clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000
 print("{:.3f}ms ".format(clk), end='')

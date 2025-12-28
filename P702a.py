@@ -60,7 +60,7 @@ if len(sys.argv) > 1:
 
 def main():
     global nl
-    t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    t0=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     exp2Max = 0
     while (1 << exp2Max) < nl:
         exp2Max += 1
@@ -77,7 +77,7 @@ def main():
     pow2 = (1 << exp2Max) - nl
     nbInv = F702a(nl % pow2, pow2)
     sum2B1W -=2 * ( (pow2-1) * (pow2-2)  - nbInv )
-    clk = (time.clock_gettime_ns(time.CLOCK_MONOTONIC) - t0) / 1000000
+    clk = (time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID) - t0) / 1000000
     print("{:.3f}ms ".format(clk), end='')
     print("SUM=",nl*(3*nl+1)/2*(exp2Max+1) - sum2B1W )
 

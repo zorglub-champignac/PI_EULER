@@ -46,10 +46,10 @@ def TestSol(sqa,n,a,b ):
         return True
     else:
         return False
-t0=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+t0=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
 def AddSol(n,a,b,k):
     global t0
-    t1=time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+    t1=time.clock_gettime_ns(time.CLOCK_PROCESS_CPUTIME_ID)
     clk = (t1 - t0) / 1000000
     print("{:.3f}ms ".format(clk), end='')
     print("\t",n)
